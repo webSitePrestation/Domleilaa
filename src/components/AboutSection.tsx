@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 import Image from 'next/image'
+import { site } from '@/config/site'
 
 const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number]
 
@@ -21,7 +22,7 @@ function InfoCard({ className = '' }: { className?: string }) {
         className="text-[11px] tracking-[0.12em] text-[#E8E0D8] font-light"
         style={{ fontFamily: 'var(--font-playfair)' }}
       >
-        Duo de Petons
+        {site.name}
       </span>
       <span
         className="text-[8px] tracking-[0.22em] uppercase text-[#B22222]/90 font-light"
@@ -39,7 +40,7 @@ function InfoCard({ className = '' }: { className?: string }) {
   )
 }
 
-const ABOUT_IMAGE_SRC = '/WhatsApp%20Image%202026-05-05%20at%2014.36.52.jpeg'
+const ABOUT_IMAGE_SRC = '/media/about.jpg'
 
 export default function AboutSection() {
   const [aboutImageSrc, setAboutImageSrc] = useState(ABOUT_IMAGE_SRC)
@@ -56,7 +57,7 @@ export default function AboutSection() {
     <section
       ref={sectionRef}
       id="about"
-      aria-label="À propos — Duo de Petons"
+      aria-label={`À propos — ${site.name}`}
       className="relative w-full bg-[#0A0A0A]"
     >
 
@@ -70,15 +71,19 @@ export default function AboutSection() {
 
           {/* Image — occupe tout le panneau gauche en absolute */}
           <div className="absolute inset-y-0 left-0 w-[46%] xl:w-[44%] overflow-hidden rounded-r-[2.5rem]">
-            <Image
-              src={aboutImageSrc}
-              alt="Duo de Petons"
-              fill
-              sizes="46vw"
-              className="object-cover object-[50%_20%] brightness-[1.08] contrast-[1.02]"
-              loading="eager"
-              onError={() => setAboutImageSrc(ABOUT_IMAGE_SRC)}
-            />
+            {aboutImageSrc ? (
+              <Image
+                src={aboutImageSrc}
+                alt={site.name}
+                fill
+                sizes="46vw"
+                className="object-cover object-[50%_20%] brightness-[1.08] contrast-[1.02]"
+                loading="eager"
+                onError={() => setAboutImageSrc('')}
+              />
+            ) : (
+              <div className="absolute inset-0 bg-[#1A0F1C]" aria-hidden />
+            )}
             <div className="absolute inset-0 border-r border-[#B22222]/25" />
             {/* Fondu latéral droite → noir pour raccorder avec le texte */}
             <div
@@ -218,14 +223,18 @@ export default function AboutSection() {
 
         {/* Image mobile — hauteur fixe explicite */}
         <div className="relative w-full h-[460px] overflow-hidden rounded-b-[2rem]">
-          <Image
-            src={aboutImageSrc}
-            alt="Duo de Petons"
-            fill
-            sizes="100vw"
-            className="object-cover object-[50%_16%] brightness-[1.08] contrast-[1.02]"
-            onError={() => setAboutImageSrc(ABOUT_IMAGE_SRC)}
-          />
+          {aboutImageSrc ? (
+            <Image
+              src={aboutImageSrc}
+              alt={site.name}
+              fill
+              sizes="100vw"
+              className="object-cover object-[50%_16%] brightness-[1.08] contrast-[1.02]"
+              onError={() => setAboutImageSrc('')}
+            />
+          ) : (
+            <div className="absolute inset-0 bg-[#1A0F1C]" aria-hidden />
+          )}
           <div className="absolute inset-0 border-b border-[#B22222]/25" />
           {/* Fondu bas */}
           <div

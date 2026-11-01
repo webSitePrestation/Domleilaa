@@ -1,14 +1,15 @@
 import Link from 'next/link'
 import { MessageSquare } from 'lucide-react'
 import type { Metadata } from 'next'
+import { site } from '@/config/site'
 
 export const metadata: Metadata = {
-  title: 'Protocole de contact — Duo de Petons',
+  title: `Protocole de contact — ${site.name}`,
   description: 'Comment m\'approcher correctement. Ce que j\'attends d\'un premier message.',
   robots: { index: false, follow: false },
 }
 
-const CONTACT_URL = 'https://wa.me/33642218042'
+const CONTACT_URL = site.links.telegram
 
 interface Etape {
   numero: string
@@ -25,8 +26,8 @@ const ETAPES: Etape[] = [
   },
   {
     numero: '02',
-    titre:  'Contact SMS / WhatsApp',
-    texte:  'Contactez-nous uniquement par SMS ou WhatsApp au 06 42 21 80 42 si vous êtes déjà aligné avec nos conditions.',
+    titre:  'Contact Telegram',
+    texte:  'Contacte-moi uniquement sur Telegram si tu es déjà aligné avec mes conditions.',
   },
   {
     numero: '03',
@@ -66,7 +67,7 @@ export default function ProtocolePage() {
           className="text-[10px] tracking-[0.5em] uppercase text-[#B22222] hover:text-[#B22222]/70 transition-colors duration-300"
           style={{ fontFamily: 'var(--font-jost)' }}
         >
-          ← D · J
+          ← {site.name}
         </Link>
         <span
           className="text-[9px] tracking-[0.4em] uppercase text-[#E8E0D8]/25 font-light"
@@ -220,7 +221,7 @@ export default function ProtocolePage() {
               className="relative z-10 text-[9px] tracking-[0.38em] uppercase font-light text-[#E8E0D8]"
               style={{ fontFamily: 'var(--font-jost)' }}
             >
-              Écrire sur WhatsApp
+              Écrire sur Telegram
             </span>
           </a>
 

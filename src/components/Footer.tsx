@@ -2,18 +2,12 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-
-/* ─────────────────────────────────────────────────────────────────
-   CONFIG
-───────────────────────────────────────────────────────────────── */
-const WHATSAPP_URL = 'https://wa.me/33642218042'
-const X_URL = 'https://x.com/DuoDePetons'
-/** Remplace par ton lien MYM / OnlyFans / Fansly agrégé */
-const MYM_ONLYFANS_URL = '#'
+import { site } from '@/config/site'
 
 const FOOTER_BAR_LINKS = [
-  { label: 'X', href: X_URL, external: true },
-  { label: 'MYM / OnlyFans', href: MYM_ONLYFANS_URL, external: true },
+  { label: 'Telegram', href: site.links.telegram, external: true },
+  { label: 'X', href: site.links.x, external: true },
+  { label: 'MYM', href: site.links.mym, external: true },
   { label: 'Mentions légales', href: '/mentions-legales', external: false },
 ] as const
 
@@ -29,7 +23,7 @@ export default function Footer() {
       ref={ref}
       id="contact"
       role="contentinfo"
-      aria-label="Pied de page — Duo de Petons"
+      aria-label={`Pied de page — ${site.name}`}
       className="relative w-full bg-[#0A0A0A] overflow-hidden"
     >
       <div className="w-full h-px bg-gradient-to-r from-transparent via-[#B22222]/30 to-transparent" />
@@ -69,7 +63,7 @@ export default function Footer() {
         </motion.div>
 
         <motion.a
-          href={WHATSAPP_URL}
+          href={site.links.telegram}
           target="_blank"
           rel="noopener noreferrer"
           initial={{ opacity: 0, y: 20 }}
@@ -77,7 +71,7 @@ export default function Footer() {
           transition={{ delay: 0.32, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           whileHover={{ scale: 1.015 }}
           whileTap={{ scale: 0.97 }}
-          aria-label="Contacter sur WhatsApp"
+          aria-label="Écrire sur Telegram"
           className="
             group relative
             flex items-center justify-center
@@ -103,7 +97,7 @@ export default function Footer() {
             className="relative z-10 text-[9px] tracking-[0.32em] uppercase font-light text-[#E8E0D8]"
             style={{ fontFamily: 'var(--font-jost)' }}
           >
-            Contacter sur WhatsApp
+            Écrire sur Telegram
           </span>
         </motion.a>
 
@@ -128,7 +122,7 @@ export default function Footer() {
           className="text-[11px] tracking-[0.3em] font-light text-[#E8E0D8] select-none hover:text-[#B22222]/80 transition-colors"
           style={{ fontFamily: 'var(--font-playfair)' }}
         >
-          D <span style={{ color: 'var(--red-primary)' }}>·</span> P
+          {site.name}
         </a>
 
         <nav
@@ -152,7 +146,7 @@ export default function Footer() {
           className="text-[9px] tracking-[0.22em] uppercase text-[#E8E0D8]/22 font-light text-center"
           style={{ fontFamily: 'var(--font-jost)' }}
         >
-          © 2026 Duo de Petons — Tous droits réservés
+          © 2026 {site.name} — Tous droits réservés
         </p>
       </div>
     </footer>

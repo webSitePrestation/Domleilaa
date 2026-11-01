@@ -9,14 +9,9 @@ import AboutSection    from '@/components/AboutSection'
 import ServicesSection from '@/components/ServicesSection'
 import TeasingSection  from '@/components/TeasingSection'
 import Footer          from '@/components/Footer'
+import { site } from '@/config/site'
 
-/* ─────────────────────────────────────────────────────────────────
-   CONFIG
-───────────────────────────────────────────────────────────────── */
-const WHATSAPP_URL = 'https://wa.me/33642218042'
-const X_URL = 'https://x.com/DuoDePetons'
-
-interface NavLink { label: string; href: string }
+interface NavLink { label: string; href: string; external?: boolean }
 
 const NAV_LINKS: NavLink[] = [
   { label: 'Sanctuaire', href: '#hero'     },
@@ -24,7 +19,7 @@ const NAV_LINKS: NavLink[] = [
   { label: 'Culte',      href: '#services' },
   { label: 'Galerie',    href: '#gallery'  },
   { label: 'Tribute',    href: '#contact'  },
-  { label: 'Réservation', href: '/reservation' },
+  { label: 'Telegram', href: site.links.telegram, external: true },
 ]
 
 function NavbarLogo({ className = '' }: { className?: string }) {
@@ -34,7 +29,7 @@ function NavbarLogo({ className = '' }: { className?: string }) {
       className={`font-light text-[#E8E0D8] select-none ${className}`}
       style={{ fontFamily: 'var(--font-playfair)', letterSpacing: '0.3em' }}
     >
-      D <span style={{ color: 'var(--red-primary)' }}>·</span> P
+      {site.name}
     </a>
   )
 }
@@ -134,7 +129,7 @@ export default function HomePage() {
                 className="text-[clamp(2.6rem,11vw,5.6rem)] italic leading-none text-[#E8E0D8]"
                 style={{ fontFamily: 'var(--font-playfair)' }}
               >
-                D <span style={{ color: 'var(--red-primary)' }}>·</span> P
+                {site.name}
               </motion.span>
 
               <motion.div
@@ -171,10 +166,11 @@ export default function HomePage() {
         <NavbarLogo className="text-[10px] shrink-0" />
 
         <div className="flex flex-1 items-center justify-center gap-6 lg:gap-8 min-w-0">
-          {NAV_LINKS.map(({ label, href }) => (
+          {NAV_LINKS.map(({ label, href, external }) => (
             <a
               key={`sticky-${label}`}
               href={href}
+              {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
               className="text-[9px] uppercase tracking-[0.34em] text-[#E8E0D8]/58 hover:text-[#B22222] transition-colors duration-300 whitespace-nowrap"
               style={{ fontFamily: 'var(--font-jost)' }}
             >
@@ -184,7 +180,7 @@ export default function HomePage() {
         </div>
 
         <a
-          href={WHATSAPP_URL}
+          href={site.links.telegram}
           target="_blank"
           rel="noopener noreferrer"
           className="shrink-0 px-4 py-2 text-[9px] uppercase tracking-[0.28em] text-[#E8E0D8]/85 transition-colors duration-300 hover:text-[color:var(--red-bright)] border"
@@ -193,7 +189,7 @@ export default function HomePage() {
             borderColor: 'var(--red-primary)',
           }}
         >
-          Contacter sur WhatsApp
+          Écrire sur Telegram
         </a>
 
         <div className="relative group shrink-0">
@@ -248,7 +244,7 @@ export default function HomePage() {
 
         <div className="hidden lg:flex items-center gap-3 pl-2 ml-1 border-l border-[#E8E0D8]/10">
           <a
-            href={X_URL}
+            href={site.links.x}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="X"
@@ -278,17 +274,20 @@ export default function HomePage() {
       <main
         id="hero"
         className="relative z-10 w-full h-[100dvh] min-h-[600px] overflow-hidden flex flex-col bg-[#0A0A0A]"
-        aria-label="Hero — Duo de Petons"
+        aria-label={`Hero — ${site.name}`}
       >
         {/* Fond image */}
         <div className="absolute inset-0 z-0" aria-hidden="true">
           <Image
-            src="/WhatsApp%20Image%202026-05-05%20at%2014.36.53%20%281%29.jpeg"
+            src="/media/hero.jpg"
             alt=""
             fill
             priority
             sizes="100vw"
             className="object-cover object-top"
+            onError={(event) => {
+              event.currentTarget.style.display = 'none'
+            }}
           />
           <div
             className="absolute inset-0"
@@ -345,10 +344,11 @@ export default function HomePage() {
                 <X size={20} strokeWidth={1} />
               </button>
 
-              {NAV_LINKS.map(({ label, href }, i) => (
+              {NAV_LINKS.map(({ label, href, external }, i) => (
                 <motion.a
                   key={label}
                   href={href}
+                  {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                   custom={i}
                   variants={menuLinkVariants}
                   initial="hidden"
@@ -363,7 +363,7 @@ export default function HomePage() {
               ))}
 
               <motion.a
-                href={WHATSAPP_URL}
+                href={site.links.telegram}
                 target="_blank"
                 rel="noopener noreferrer"
                 custom={NAV_LINKS.length}
@@ -378,7 +378,7 @@ export default function HomePage() {
                   borderColor: 'var(--red-primary)',
                 }}
               >
-                Contacter sur WhatsApp
+                Écrire sur Telegram
               </motion.a>
 
               <motion.div
@@ -430,7 +430,7 @@ export default function HomePage() {
                 className="flex items-center gap-4 mt-1"
               >
                 <a
-                  href={X_URL}
+                  href={site.links.x}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="X"
@@ -478,7 +478,7 @@ export default function HomePage() {
               className="text-[clamp(2.4rem,12vw,6.5rem)] leading-[0.95] tracking-tight text-[#E8E0D8] font-normal text-center"
               style={{ fontFamily: 'var(--font-playfair)' }}
             >
-              Duo de Petons
+              {site.name}
             </motion.h1>
 
             <motion.p
@@ -504,7 +504,7 @@ export default function HomePage() {
           {mounted && (
             <>
               <motion.a
-                href={WHATSAPP_URL}
+                href={site.links.telegram}
                 target="_blank"
                 rel="noopener noreferrer"
                 initial={{ opacity: 0, y: 28 }}
@@ -514,7 +514,7 @@ export default function HomePage() {
                 whileTap={{ scale: 0.97 }}
                 className="group relative w-full max-w-[280px] py-[18px] px-6 text-center border border-[#B22222]/38 hover:border-[#B22222]/80 transition-colors duration-500 overflow-hidden focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#B22222]/60"
                 style={{ animation: 'luxePulse 3.8s ease-in-out 2.8s infinite' }}
-                aria-label="Contacter sur WhatsApp"
+                aria-label="Écrire sur Telegram"
               >
                 <span aria-hidden="true" className="absolute inset-0 bg-[#B22222]/0 group-hover:bg-[#B22222]/8 transition-colors duration-500" />
                 <span aria-hidden="true" className="absolute top-0 -left-full h-full w-1/2 bg-gradient-to-r from-transparent via-[#B22222]/22 to-transparent group-hover:left-[160%] transition-[left] duration-700 ease-out" />
@@ -522,7 +522,7 @@ export default function HomePage() {
                   className="relative z-10 text-[9px] tracking-[0.35em] uppercase font-light text-[#E8E0D8]"
                   style={{ fontFamily: 'var(--font-jost)' }}
                 >
-                  Contacter sur WhatsApp
+                  Écrire sur Telegram
                 </span>
               </motion.a>
 

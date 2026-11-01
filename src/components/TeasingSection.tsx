@@ -3,9 +3,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useInView } from 'framer-motion'
 import Image from 'next/image'
+import { site } from '@/config/site'
 
 const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number]
-const WHATSAPP_URL = 'https://wa.me/33642218042'
 
 interface GalleryItem {
   src:  string
@@ -14,12 +14,12 @@ interface GalleryItem {
 }
 
 const ITEMS: GalleryItem[] = [
-  { src: '/WhatsApp%20Image%202026-05-05%20at%2014.36.52%20%281%29.jpeg', alt: 'Duo de Petons', size: 'tall'  },
-  { src: '/WhatsApp%20Image%202026-05-05%20at%2014.36.52%20%282%29.jpeg', alt: 'Duo de Petons', size: 'small' },
-  { src: '/WhatsApp%20Image%202026-05-05%20at%2014.36.52%20%283%29.jpeg', alt: 'Duo de Petons', size: 'small' },
-  { src: '/WhatsApp%20Image%202026-05-05%20at%2014.36.52%20%284%29.jpeg', alt: 'Duo de Petons', size: 'wide'  },
-  { src: '/WhatsApp%20Image%202026-05-05%20at%2014.36.52%20%285%29.jpeg', alt: 'Duo de Petons', size: 'small' },
-  { src: '/WhatsApp%20Image%202026-05-05%20at%2014.36.53.jpeg', alt: 'Duo de Petons', size: 'small' },
+  { src: '/media/gallery-1.jpg', alt: site.name, size: 'tall'  },
+  { src: '/media/gallery-2.jpg', alt: site.name, size: 'small' },
+  { src: '/media/gallery-3.jpg', alt: site.name, size: 'small' },
+  { src: '/media/gallery-4.jpg', alt: site.name, size: 'wide'  },
+  { src: '/media/gallery-5.jpg', alt: site.name, size: 'small' },
+  { src: '/media/gallery-6.jpg', alt: site.name, size: 'small' },
 ]
 
 export default function TeasingSection() {
@@ -49,7 +49,7 @@ export default function TeasingSection() {
   return (
     <section
       id="gallery"
-      aria-label="Galerie — Duo de Petons"
+      aria-label={`Galerie — ${site.name}`}
       className="relative w-full bg-[#0A0A0A] overflow-hidden py-28 lg:py-40 px-6 md:px-12 lg:px-20"
     >
       <span
@@ -134,6 +134,9 @@ export default function TeasingSection() {
                   brightness-100 group-hover:brightness-105
                   transition-[transform,filter] duration-700
                 "
+                onError={(event) => {
+                  event.currentTarget.style.display = 'none'
+                }}
               />
 
               <div
@@ -173,11 +176,11 @@ export default function TeasingSection() {
             className="text-[13px] text-[#E8E0D8]/40 font-light text-center max-w-sm whitespace-pre-line"
             style={{ fontFamily: 'var(--font-jost)' }}
           >
-            {`Pour échanger ou réserver une session,\nécris-nous sur WhatsApp.`}
+            {`Pour échanger,\nécris-moi sur Telegram.`}
           </p>
 
           <motion.a
-            href={WHATSAPP_URL}
+            href={site.links.telegram}
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.015 }}
@@ -208,7 +211,7 @@ export default function TeasingSection() {
               className="relative z-10 text-[9px] tracking-[0.38em] uppercase font-light text-[#E8E0D8]"
               style={{ fontFamily: 'var(--font-jost)' }}
             >
-              WhatsApp — Duo de Petons
+              Telegram — {site.name}
             </span>
           </motion.a>
 
@@ -264,6 +267,9 @@ export default function TeasingSection() {
                   sizes="100vw"
                   className="max-h-[90vh] w-auto max-w-[92vw] object-contain"
                   priority
+                  onError={(event) => {
+                    event.currentTarget.style.display = 'none'
+                  }}
                 />
               </motion.div>
             </div>

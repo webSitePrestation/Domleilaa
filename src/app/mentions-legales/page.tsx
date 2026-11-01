@@ -1,7 +1,5 @@
 import Link from 'next/link'
-
-const WHATSAPP_URL = 'https://wa.me/33642218042'
-const X_URL = 'https://x.com/DuoDePetons'
+import { site } from '@/config/site'
 
 export default function MentionsLegalesPage() {
   return (
@@ -14,7 +12,7 @@ export default function MentionsLegalesPage() {
             style={{ fontFamily: 'var(--font-jost)' }}
             aria-label="Retour à l'accueil"
           >
-            D · J
+            {site.name}
           </Link>
 
           <div className="flex flex-col gap-4">
@@ -40,7 +38,7 @@ export default function MentionsLegalesPage() {
               className="text-[14px] leading-[1.9] text-[#E8E0D8]/75 font-light"
               style={{ fontFamily: 'var(--font-jost)' }}
             >
-              Cette plateforme est éditée sous l&apos;identité Duo de Petons.
+              Éditeur : TODO. Identité publique : {site.name}. Adresse : TODO. SIRET : TODO.
             </p>
             <div className="w-full h-px bg-[#B22222]/25" />
           </section>
@@ -56,7 +54,7 @@ export default function MentionsLegalesPage() {
               className="text-[14px] leading-[1.9] text-[#E8E0D8]/75 font-light"
               style={{ fontFamily: 'var(--font-jost)' }}
             >
-              Le site est hébergé par Vercel Inc.
+              Hébergeur : TODO.
             </p>
             <div className="w-full h-px bg-[#B22222]/25" />
           </section>
@@ -124,12 +122,20 @@ export default function MentionsLegalesPage() {
             >
               Cette plateforme peut rediriger vers des services externes :
               {' '}
-              <a href={X_URL} target="_blank" rel="noopener noreferrer" className="text-[#E8E0D8]/80 hover:text-[#B22222] transition-colors duration-300">
+              <a href={site.links.telegram} target="_blank" rel="noopener noreferrer" className="text-[#E8E0D8]/80 hover:text-[#B22222] transition-colors duration-300">
+                Telegram
+              </a>
+              {', '}
+              <a href={site.links.x} target="_blank" rel="noopener noreferrer" className="text-[#E8E0D8]/80 hover:text-[#B22222] transition-colors duration-300">
                 X
               </a>
+              {', '}
+              <a href={site.links.whatsapp} target="_blank" rel="noopener noreferrer" className="text-[#E8E0D8]/80 hover:text-[#B22222] transition-colors duration-300">
+                WhatsApp (TODO)
+              </a>
               {' '}et{' '}
-              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="text-[#E8E0D8]/80 hover:text-[#B22222] transition-colors duration-300">
-                WhatsApp
+              <a href={site.links.mym} className="text-[#E8E0D8]/80 hover:text-[#B22222] transition-colors duration-300">
+                MYM (TODO)
               </a>
               . Leur consultation implique leurs propres conditions d&apos;utilisation.
             </p>
@@ -149,11 +155,11 @@ export default function MentionsLegalesPage() {
             >
               Pour toute demande, le contact s&apos;effectue via
               {' '}
-              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="text-[#E8E0D8]/80 hover:text-[#B22222] transition-colors duration-300">
-                WhatsApp
+              <a href={site.links.telegram} target="_blank" rel="noopener noreferrer" className="text-[#E8E0D8]/80 hover:text-[#B22222] transition-colors duration-300">
+                Telegram
               </a>
               {' '}ou{' '}
-              <a href={X_URL} target="_blank" rel="noopener noreferrer" className="text-[#E8E0D8]/80 hover:text-[#B22222] transition-colors duration-300">
+              <a href={site.links.x} target="_blank" rel="noopener noreferrer" className="text-[#E8E0D8]/80 hover:text-[#B22222] transition-colors duration-300">
                 X
               </a>
               .

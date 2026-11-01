@@ -1,8 +1,9 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import { site } from '@/config/site'
 
 export const metadata: Metadata = {
-  title: 'Journal — Duo de Petons',
+  title: `Journal — ${site.name}`,
   description: 'Réflexions sur la domination, le lifestyle et l\'art de la soumission.',
   robots: { index: true, follow: true },
 }
@@ -92,7 +93,7 @@ export default function BlogPage() {
           className="text-[10px] tracking-[0.5em] uppercase text-[#B22222] hover:text-[#B22222]/70 transition-colors duration-300"
           style={{ fontFamily: 'var(--font-jost)' }}
         >
-          ← D · J
+          ← {site.name}
         </Link>
         <span
           className="text-[9px] tracking-[0.4em] uppercase text-[#E8E0D8]/25 font-light"

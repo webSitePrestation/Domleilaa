@@ -1,12 +1,11 @@
 'use client'
 
 import { useRef } from 'react'
-import Link from 'next/link'
 import { motion, useInView } from 'framer-motion'
 import { Footprints, Crown, Sparkles } from 'lucide-react'
+import { site } from '@/config/site'
 
 const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number]
-const CONTACT_URL = 'https://wa.me/33642218042'
 
 interface Service {
   icon:        React.ReactNode
@@ -25,11 +24,11 @@ const SERVICES: Service[] = [
     description:
       "Massage, léchage, odeur, chatouilles,\ntrampling et jeux de nourriture.\nSession dédiée au fétichisme des pieds.",
     details: [
-      '30 min : 55€ par domina',
-      '1 h : 90€ par domina',
+      `30 min : ${site.prices.feet30} par domina`,
+      `1 h : ${site.prices.feet60} par domina`,
       'Duo ou trio uniquement',
     ],
-    cta: 'Réserver par WhatsApp',
+    cta: 'Écrire sur Telegram',
   },
   {
     icon:      <Crown size={18} strokeWidth={1} />,
@@ -38,8 +37,8 @@ const SERVICES: Service[] = [
     description:
       "Pratiques soft possibles en complément :\nordres, petites gifles, crachats, martinet,\ninsultes, moqueries, footgagging.",
     details: [
-      '30 min : 70€ par domina',
-      '1 h : 120€ par domina',
+      `30 min : ${site.prices.domination30} par domina`,
+      `1 h : ${site.prices.domination60} par domina`,
       'Cadre strict et sans nudité',
     ],
     cta: 'Demander un créneau',
@@ -49,11 +48,11 @@ const SERVICES: Service[] = [
     label:     'Conditions IRL',
     title:     'Cadre des séances',
     description:
-      'Nous recevons à Charenton-le-Pont\n(métro Liberté), en journée ou début de soirée.\nContact uniquement si vous acceptez le cadre.',
+      `Nous recevons à ${site.city}\nen journée ou début de soirée.\nContact uniquement si vous acceptez le cadre.`,
     details: [
       'Ni nudité ni masturbation',
       'Ni vous ni nous, sans exception',
-      'Contact SMS / WhatsApp : 06 42 21 80 42',
+      'Contact Telegram uniquement',
     ],
     cta: 'Lire les conditions',
   },
@@ -143,7 +142,7 @@ function ServiceCard({
 
       <div className="mt-auto pt-2">
         <a
-          href={CONTACT_URL}
+          href={site.links.telegram}
           target="_blank"
           rel="noopener noreferrer"
           className="
@@ -177,7 +176,7 @@ export default function ServicesSection() {
   return (
     <section
       id="services"
-      aria-label="Services — Duo de Petons"
+      aria-label={`Services — ${site.name}`}
       className="relative w-full bg-[#0A0A0A] overflow-hidden py-28 lg:py-40 px-6 md:px-12 lg:px-20"
     >
       <span
@@ -254,8 +253,10 @@ export default function ServicesSection() {
           >
             Tu veux une séance réelle ?
           </p>
-          <Link
-            href="/reservation"
+          <a
+            href={site.links.telegram}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-block transition-[background,filter] duration-300 hover:brightness-110"
             style={{
               fontFamily: 'Jost, sans-serif',
@@ -269,8 +270,8 @@ export default function ServicesSection() {
               textDecoration: 'none',
             }}
           >
-            Réserver une séance
-          </Link>
+            Écrire sur Telegram
+          </a>
           <p
             style={{
               marginTop: '0.8rem',
@@ -281,7 +282,7 @@ export default function ServicesSection() {
               color: 'var(--text-muted)',
             }}
           >
-            Duo ou Trio · 30 min · 1 h · Charenton-le-Pont
+            Duo ou Trio · 30 min · 1 h · {site.city} · {site.travelCities.join(' · ')}
           </p>
         </motion.div>
 

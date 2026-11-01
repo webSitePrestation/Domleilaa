@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
+import { site } from '@/config/site'
 import { ARTICLES, type Article } from '../blog-page'
 
 /* ─────────────────────────────────────────────────────────────────
@@ -77,7 +78,7 @@ export async function generateMetadata({
   const article = ARTICLES.find((a) => a.slug === params.slug)
   if (!article) return { title: 'Article introuvable' }
   return {
-    title:       `${article.titre} — Duo de Petons`,
+    title:       `${article.titre} — ${site.name}`,
     description: article.extrait,
     robots:      { index: true, follow: true },
   }
@@ -172,7 +173,7 @@ export default function ArticlePage({
             className="text-[11px] tracking-[0.35em] italic text-[#B22222]/50"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
-            Duo de Petons
+            {site.name}
           </span>
         </div>
 

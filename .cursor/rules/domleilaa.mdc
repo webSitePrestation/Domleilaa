@@ -1,0 +1,49 @@
+---
+description: Règles du projet site Domleilaa
+alwaysApply: true
+---
+
+# Projet
+Site vitrine Next.js pour "Domleilaa" (X et Telegram : @domleilaa), créatrice française majeure basée à Lille, qui se déplace partout en France et souvent à Paris. Elle ne montre jamais son visage.
+Le site est adapté depuis un site existant : on garde sa structure, ses composants et son routing.
+
+# Règles de travail
+- Ne modifie que ce qui est demandé dans le prompt en cours. Ne touche à rien d'autre.
+- Garde la structure, les composants et le routing existants, sauf demande explicite.
+- Avant un gros changement, liste les fichiers concernés.
+- Après chaque tâche, lance `npm run build` et corrige les erreurs.
+- Ne supprime aucun fichier sans me le dire dans ton résumé final.
+- Termine chaque tâche par un résumé court : fichiers modifiés, TODO restants.
+
+# Contenu et ton
+- Ton : direct, luxe, autoritaire, moqueur. Tutoiement. Phrases courtes. Zéro faute d'orthographe.
+- Aucun contenu sexuellement explicite.
+- Ne cible aucun groupe par origine ou couleur de peau : écris "hommes de tous horizons".
+- Tout est présenté comme un jeu de rôle consenti et encadré (règles claires, safeword).
+- N'invente jamais de chiffres, de témoignages, de tarifs ou de coordonnées : mets un placeholder marqué `TODO`.
+
+# Design
+- Palette centralisée en variables CSS / config Tailwind, jamais de couleur codée en dur :
+  fond #0B0710, surfaces #1A0F1C, accent #FF2E93, secondaire #C2185B, froid #8B5CF6, texte #F5E9F0, atténué #B79AAE, marron chaud #3A2220.
+- Un seul accent rose dominant, beaucoup d'espace vide, glow rose subtil sur boutons et bordures.
+- Titres en serif élégant (Cormorant Garamond), UI en Rajdhani ou Space Grotesk.
+- Animations douces qui respectent `prefers-reduced-motion`.
+- Mobile first : tout doit être lisible et utilisable sur téléphone.
+
+# Médias
+- Images et vidéos dans `/public/media/`. Utilise `next/image`.
+- Toute image publique passe par le composant `<WatermarkedImage>` (filigrane "@domleilaa").
+- Les fichiers n'existent pas encore : prévois des placeholders propres qui disparaissent quand ils sont ajoutés.
+- Ne jamais afficher d'adresse précise : seulement la ville.
+
+# Liens
+- Telegram : https://t.me/domleilaa
+- X : https://x.com/domleilaa
+- WhatsApp : https://wa.me/33XXXXXXXXX (TODO)
+- MYM : lien placeholder (TODO)
+- Aucun lien vers `/reservation` : cette page n'existe plus.
+
+# SEO et confidentialité
+- Garde `noindex, nofollow` tant que je ne dis pas de l'enlever.
+- Écran d'entrée +18 obligatoire.
+- Aucune donnée personnelle dans les mentions légales : utiliser des champs TODO.

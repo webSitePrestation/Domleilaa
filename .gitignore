@@ -44,7 +44,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# Contenu de data/ (réservations, créneaux JSON) — pas versionné ; le dossier reste via .gitkeep
-/data/*
-!/data/.gitkeep

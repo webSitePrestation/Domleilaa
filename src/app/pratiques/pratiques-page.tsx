@@ -1,9 +1,10 @@
 import Link from 'next/link'
 import { Check, X } from 'lucide-react'
 import type { Metadata } from 'next'
+import { site } from '@/config/site'
 
 export const metadata: Metadata = {
-  title: 'Pratiques & Limites — Duo de Petons',
+  title: `Pratiques & Limites — ${site.name}`,
   description: 'Ce que je pratique, ce que je ne pratique pas. Mon style de domination, mes règles, mon cadre.',
   robots: { index: false, follow: false },
 }
@@ -25,7 +26,7 @@ const OUI: PratiqueItem[] = [
   { label: 'Martinet, insultes, moqueries, footgagging' },
   { label: 'Sessions en duo ou trio (minimum deux dominatrices)' },
   { label: 'Disponibilités en journée ou début de soirée' },
-  { label: 'Accueil à Charenton-le-Pont (métro Liberté)' },
+  { label: `Accueil à ${site.city}` },
 ]
 
 const NON: PratiqueItem[] = [
@@ -39,7 +40,7 @@ const STYLE: string[] = [
   'Les séances sont centrées sur le fétichisme des pieds, avec un cadre clair et assumé.',
   'Des pratiques de domination soft peuvent être ajoutées selon vos envies et validation.',
   'Le respect des limites est non négociable : ni nudité, ni masturbation, pour tout le monde.',
-  'Contact uniquement par SMS ou WhatsApp au 06 42 21 80 42.',
+  'Contact uniquement par Telegram.',
 ]
 
 /* ─────────────────────────────────────────────────────────────────
@@ -56,7 +57,7 @@ export default function PratiquesPage() {
           className="text-[10px] tracking-[0.5em] uppercase text-[#B22222] hover:text-[#B22222]/70 transition-colors duration-300"
           style={{ fontFamily: 'var(--font-jost)' }}
         >
-          ← D · J
+          ← {site.name}
         </Link>
         <span
           className="text-[9px] tracking-[0.4em] uppercase text-[#E8E0D8]/25 font-light"
@@ -130,10 +131,10 @@ export default function PratiquesPage() {
           </h2>
           <ul className="mt-4 flex flex-col gap-2">
             <li className="text-[13px] text-[#E8E0D8]/65 font-light" style={{ fontFamily: 'var(--font-jost)' }}>
-              Fétichisme pieds : 55€ par domina (30 min) · 90€ par domina (1 h)
+              Fétichisme pieds : {site.prices.feet30} par domina (30 min) · {site.prices.feet60} par domina (1 h)
             </li>
             <li className="text-[13px] text-[#E8E0D8]/65 font-light" style={{ fontFamily: 'var(--font-jost)' }}>
-              Fétichisme + domination soft : 70€ par domina (30 min) · 120€ par domina (1 h)
+              Fétichisme + domination soft : {site.prices.domination30} par domina (30 min) · {site.prices.domination60} par domina (1 h)
             </li>
           </ul>
         </div>
