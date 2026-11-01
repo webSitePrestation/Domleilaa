@@ -5,10 +5,12 @@
   "scripts": {
     "dev": "next dev --webpack",
     "dev:turbo": "next dev --turbopack",
+    "strip-exif": "node scripts/strip-exif.mjs",
+    "prebuild": "npm run strip-exif",
     "build": "next build",
-    "cf:build": "opennextjs-cloudflare build",
-    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "cf:build": "npm run strip-exif && opennextjs-cloudflare build",
+    "preview": "npm run strip-exif && opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "npm run strip-exif && opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "start": "next start",
     "lint": "eslint"
   },

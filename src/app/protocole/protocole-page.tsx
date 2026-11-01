@@ -5,7 +5,7 @@ import { site } from '@/config/site'
 
 export const metadata: Metadata = {
   title: `Protocole de contact — ${site.name}`,
-  description: 'Comment m\'approcher correctement. Ce que j\'attends d\'un premier message.',
+  description: 'Comment m\'approcher : premier message, tribute, validation, séance et safeword.',
   robots: { index: false, follow: false },
 }
 
@@ -21,89 +21,96 @@ interface Etape {
 const ETAPES: Etape[] = [
   {
     numero: '01',
-    titre:  'Lisez d\'abord',
-    texte:  'Avant d\'écrire quoi que ce soit, lisez entièrement la page Pratiques & Limites. Un message qui pose une question déjà répondue ici sera ignoré.',
+    titre:  'Lis d\'abord',
+    texte:  'Lis la page Pratiques & Limites en entier. Une question dont la réponse est déjà écrite sera ignorée.',
   },
   {
     numero: '02',
-    titre:  'Contact Telegram',
-    texte:  'Contacte-moi uniquement sur Telegram si tu es déjà aligné avec mes conditions.',
+    titre:  'Écris sur Telegram',
+    texte:  'Contact uniquement sur Telegram. Pas de message vague, pas de simple « salut ».',
   },
   {
     numero: '03',
     titre:  'Le premier message',
-    texte:  'Présentez-vous brièvement : qui vous êtes, ce que vous recherchez, durée souhaitée (30 min ou 1 h) et formule (duo ou trio).',
-    note:   'Les vrais savent déjà comment s\'adresser à moi. Les autres apprennent à leurs dépens.',
+    texte:  'Présente-toi en quelques lignes : qui tu es, ce que tu cherches, la durée (30 min ou 1 h) et la formule choisie. Confirme que tu es majeur.',
+    note:   'Les vrais savent déjà comment s\'adresser à moi. Les autres apprennent.',
   },
   {
     numero: '04',
     titre:  'Patience',
-    texte:  'Je réponds quand je le décide. Je ne suis pas disponible en permanence. Relancer plusieurs fois avant d\'avoir une réponse est rédhibitoire.',
+    texte:  'Je réponds quand je le décide. Relancer avant d\'avoir une réponse, c\'est un blocage. Je peux refuser sans me justifier : un refus n\'est pas une invitation à insister.',
   },
   {
     numero: '05',
-    titre:  'Acceptez le refus',
-    texte:  'Je me réserve le droit de refuser tout contact sans justification. Un refus n\'est pas une invitation à insister.',
+    titre:  'Tribute et validation',
+    texte:  'Je valide ou je refuse. Si c\'est oui, le tribute se règle avant la séance, selon les modalités données en privé. Pas de tribute, pas de séance.',
+  },
+  {
+    numero: '06',
+    titre:  'Séance et safeword',
+    texte:  'Les règles et les limites sont rappelées au début. Le safeword est obligatoire : un mot, et tout s\'arrête, immédiatement, sans discussion.',
+    note:   'Tout est un jeu de rôle consenti et encadré.',
   },
 ]
 
 const ERREURS: string[] = [
   'Envoyer un premier message sexuellement explicite',
-  'Demander de la nudité ou de la masturbation',
-  'Ignorer les limites listées sur la page Pratiques',
-  'Vouvoyer puis tutoyer sans autorisation',
-  'Demander des pratiques hors cadre annoncé',
+  'Demander de la nudité ou un acte sexuel',
+  'Ignorer les limites de la page Pratiques',
+  'Négocier ou contester le tribute',
+  'Demander des photos ou des enregistrements sans mon accord',
+  'Tenter de passer outre le safeword ou une limite',
   'Relancer après un silence ou un refus',
 ]
 
 export default function ProtocolePage() {
   return (
-    <main className="min-h-screen w-full bg-[#0A0A0A] text-[#E8E0D8]">
+    <main className="min-h-screen w-full bg-bg text-fg">
 
       {/* ── Header ──────────────────────────────────────────────── */}
-      <header className="w-full border-b border-[#E8E0D8]/6 px-6 py-8 md:px-12 flex items-center justify-between">
+      <header className="w-full border-b border-brown px-6 py-8 md:px-12 flex items-center justify-between">
         <Link
           href="/"
-          className="text-[10px] tracking-[0.5em] uppercase text-[#B22222] hover:text-[#B22222]/70 transition-colors duration-300"
-          style={{ fontFamily: 'var(--font-jost)' }}
+          className="text-[11px] tracking-[0.5em] uppercase text-accent hover:text-accent transition-colors duration-300"
+          style={{ fontFamily: 'var(--font-ui)' }}
         >
           ← {site.name}
         </Link>
         <span
-          className="text-[9px] tracking-[0.4em] uppercase text-[#E8E0D8]/25 font-light"
-          style={{ fontFamily: 'var(--font-jost)' }}
+          className="text-[11px] tracking-[0.4em] uppercase text-muted font-normal"
+          style={{ fontFamily: 'var(--font-ui)' }}
         >
           Protocole
         </span>
       </header>
 
-      <div className="max-w-3xl mx-auto px-6 md:px-12 py-20 md:py-28 flex flex-col gap-20">
+      <div className="reveal-group max-w-3xl mx-auto px-6 md:px-12 py-20 md:py-28 flex flex-col gap-20">
 
         {/* ── Titre ───────────────────────────────────────────────── */}
         <div className="flex flex-col gap-5">
           <div className="flex items-center gap-4">
-            <div className="w-8 h-px bg-[#B22222]" />
+            <div className="w-8 h-px bg-accent" />
             <span
-              className="text-[9px] tracking-[0.5em] uppercase text-[#B22222] font-light"
-              style={{ fontFamily: 'var(--font-jost)' }}
+              className="text-[11px] tracking-[0.5em] uppercase text-accent font-normal"
+              style={{ fontFamily: 'var(--font-ui)' }}
             >
               Comment m&apos;approcher
             </span>
           </div>
           <h1
-            className="text-[clamp(2.2rem,6vw,3.8rem)] leading-[1.05] italic font-normal text-[#E8E0D8]"
-            style={{ fontFamily: 'var(--font-playfair)' }}
+            className="text-[clamp(2.2rem,6vw,3.8rem)] leading-[1.05] italic font-normal text-fg"
+            style={{ fontFamily: 'var(--font-display)' }}
           >
             Protocole
             <br />
-            <span className="not-italic font-bold text-[#B22222]">de contact.</span>
+            <span className="glow-text not-italic font-bold text-accent">de contact.</span>
           </h1>
           <p
-            className="text-[13px] leading-[1.9] text-[#E8E0D8]/50 font-light max-w-lg mt-2"
-            style={{ fontFamily: 'var(--font-jost)' }}
+            className="text-[15px] leading-[1.9] text-muted font-normal max-w-lg mt-2"
+            style={{ fontFamily: 'var(--font-ui)' }}
           >
-            Contactez-nous seulement si vous acceptez le cadre :
-            ni nudité, ni masturbation, et un respect strict des limites posées.
+            Écris-moi seulement si tu acceptes le cadre : jeu de rôle consenti,
+            règles claires, safeword obligatoire et respect strict des limites posées.
           </p>
         </div>
 
@@ -114,14 +121,14 @@ export default function ProtocolePage() {
 
               {/* Ligne verticale entre étapes */}
               {i < ETAPES.length - 1 && (
-                <div className="absolute left-[22px] top-10 bottom-0 w-px bg-[#E8E0D8]/6" />
+                <div className="absolute left-[22px] top-10 bottom-0 w-px bg-brown" />
               )}
 
               {/* Numéro */}
-              <div className="flex-shrink-0 w-11 h-11 border border-[#B22222]/30 flex items-center justify-center bg-[#0A0A0A] relative z-10">
+              <div className="flex-shrink-0 w-11 h-11 border border-accent/30 flex items-center justify-center bg-bg relative z-10">
                 <span
-                  className="text-[10px] tracking-[0.2em] text-[#B22222] font-light"
-                  style={{ fontFamily: 'var(--font-jost)' }}
+                  className="text-[11px] tracking-[0.2em] text-accent font-normal"
+                  style={{ fontFamily: 'var(--font-ui)' }}
                 >
                   {numero}
                 </span>
@@ -130,22 +137,22 @@ export default function ProtocolePage() {
               {/* Contenu */}
               <div className="flex flex-col gap-3 pt-2 flex-1">
                 <h2
-                  className="text-[1.2rem] italic font-normal text-[#E8E0D8]/90"
-                  style={{ fontFamily: 'var(--font-playfair)' }}
+                  className="text-[1.2rem] italic font-normal text-fg/90"
+                  style={{ fontFamily: 'var(--font-display)' }}
                 >
                   {titre}
                 </h2>
                 <p
-                  className="text-[13px] leading-[1.9] text-[#E8E0D8]/50 font-light"
-                  style={{ fontFamily: 'var(--font-jost)' }}
+                  className="text-[15px] leading-[1.9] text-muted font-normal"
+                  style={{ fontFamily: 'var(--font-ui)' }}
                 >
                   {texte}
                 </p>
                 {note && (
-                  <div className="border-l border-[#B22222]/30 pl-4 mt-1">
+                  <div className="border-l border-accent/30 pl-4 mt-1">
                     <p
-                      className="text-[12px] italic text-[#B22222]/60 leading-relaxed"
-                      style={{ fontFamily: 'var(--font-playfair)' }}
+                      className="text-[14px] italic text-accent leading-relaxed"
+                      style={{ fontFamily: 'var(--font-display)' }}
                     >
                       {note}
                     </p>
@@ -159,24 +166,24 @@ export default function ProtocolePage() {
         {/* Séparateur */}
         <div
           className="w-full h-px"
-          style={{ background: 'linear-gradient(to right, transparent, rgba(178,34,34,0.2), transparent)' }}
+          style={{ background: 'linear-gradient(to right, transparent, color-mix(in srgb, var(--accent) 20%, transparent), transparent)' }}
         />
 
         {/* ── Erreurs à éviter ────────────────────────────────────── */}
         <div className="flex flex-col gap-6">
           <h2
-            className="text-[1.3rem] italic font-normal text-[#E8E0D8]/70"
-            style={{ fontFamily: 'var(--font-playfair)' }}
+            className="text-[1.3rem] italic font-normal text-fg/70"
+            style={{ fontFamily: 'var(--font-display)' }}
           >
             Ce qui mène à un blocage immédiat
           </h2>
           <ul className="flex flex-col gap-3">
             {ERREURS.map((e) => (
               <li key={e} className="flex items-start gap-3">
-                <span className="text-[#E8E0D8]/20 flex-shrink-0 text-[10px] mt-[3px]">✕</span>
+                <span className="text-muted flex-shrink-0 text-[11px] mt-[3px]">✕</span>
                 <span
-                  className="text-[13px] text-[#E8E0D8]/40 font-light leading-relaxed"
-                  style={{ fontFamily: 'var(--font-jost)' }}
+                  className="text-[15px] text-muted font-normal leading-relaxed"
+                  style={{ fontFamily: 'var(--font-ui)' }}
                 >
                   {e}
                 </span>
@@ -188,14 +195,14 @@ export default function ProtocolePage() {
         {/* Séparateur */}
         <div
           className="w-full h-px"
-          style={{ background: 'linear-gradient(to right, transparent, rgba(178,34,34,0.2), transparent)' }}
+          style={{ background: 'linear-gradient(to right, transparent, color-mix(in srgb, var(--accent) 20%, transparent), transparent)' }}
         />
 
         {/* ── CTA final ───────────────────────────────────────────── */}
         <div className="flex flex-col items-center gap-6 text-center">
           <p
-            className="text-[1.1rem] italic text-[#E8E0D8]/60 leading-relaxed"
-            style={{ fontFamily: 'var(--font-playfair)' }}
+            className="text-[1.1rem] italic text-muted leading-relaxed"
+            style={{ fontFamily: 'var(--font-display)' }}
           >
             &ldquo; Ceux qui respectent ces règles savent déjà
             ce qu&apos;ils cherchent. &rdquo;
@@ -207,19 +214,19 @@ export default function ProtocolePage() {
             rel="noopener noreferrer"
             className="
               group relative flex items-center gap-3
-              px-10 py-4 border border-[#B22222]/40 hover:border-[#B22222]/80
+              glow-box px-10 py-4 border border-accent/40 hover:border-accent/80
               overflow-hidden transition-colors duration-500
-              focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#B22222]/60
+              focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/60
             "
           >
             <span
               aria-hidden="true"
-              className="absolute inset-0 bg-[#B22222]/0 group-hover:bg-[#B22222]/8 transition-colors duration-500"
+              className="absolute inset-0 bg-accent/0 group-hover:bg-accent/8 transition-colors duration-500"
             />
-            <MessageSquare size={12} strokeWidth={1.5} className="relative z-10 text-[#B22222]" />
+            <MessageSquare size={12} strokeWidth={1.5} className="relative z-10 text-accent" />
             <span
-              className="relative z-10 text-[9px] tracking-[0.38em] uppercase font-light text-[#E8E0D8]"
-              style={{ fontFamily: 'var(--font-jost)' }}
+              className="relative z-10 text-[11px] tracking-[0.38em] uppercase font-normal text-fg"
+              style={{ fontFamily: 'var(--font-ui)' }}
             >
               Écrire sur Telegram
             </span>
@@ -227,8 +234,8 @@ export default function ProtocolePage() {
 
           <Link
             href="/"
-            className="text-[9px] tracking-[0.3em] uppercase font-light text-[#E8E0D8]/25 hover:text-[#E8E0D8]/50 transition-colors duration-300"
-            style={{ fontFamily: 'var(--font-jost)' }}
+            className="text-[11px] tracking-[0.3em] uppercase font-normal text-muted hover:text-fg transition-colors duration-300"
+            style={{ fontFamily: 'var(--font-ui)' }}
           >
             ← Retour à l&apos;accueil
           </Link>

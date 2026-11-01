@@ -3,12 +3,21 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence, Variants } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
-import Image from 'next/image'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
+import Monogram        from '@/components/Monogram'
+import HeroVideo       from '@/components/HeroVideo'
+import ContactLinks    from '@/components/ContactLinks'
+import SocialProofBar  from '@/components/SocialProofBar'
+const ProtocolSteps = dynamic(() => import('@/components/ProtocolSteps'))
+const UpcomingDates = dynamic(() => import('@/components/UpcomingDates'))
+const Testimonials = dynamic(() => import('@/components/Testimonials'))
+const Faq = dynamic(() => import('@/components/Faq'))
+const CastingSection = dynamic(() => import('@/components/CastingSection'))
 import AboutSection    from '@/components/AboutSection'
 import ServicesSection from '@/components/ServicesSection'
-import TeasingSection  from '@/components/TeasingSection'
-import Footer          from '@/components/Footer'
+const TeasingSection = dynamic(() => import('@/components/TeasingSection'))
+const Footer = dynamic(() => import('@/components/Footer'))
 import { site } from '@/config/site'
 
 interface NavLink { label: string; href: string; external?: boolean }
@@ -18,6 +27,7 @@ const NAV_LINKS: NavLink[] = [
   { label: 'La Déesse',  href: '#about'    },
   { label: 'Culte',      href: '#services' },
   { label: 'Galerie',    href: '#gallery'  },
+  { label: 'Tournage',   href: '#tournage' },
   { label: 'Tribute',    href: '#contact'  },
   { label: 'Telegram', href: site.links.telegram, external: true },
 ]
@@ -26,10 +36,10 @@ function NavbarLogo({ className = '' }: { className?: string }) {
   return (
     <a
       href="#hero"
-      className={`font-light text-[#E8E0D8] select-none ${className}`}
-      style={{ fontFamily: 'var(--font-playfair)', letterSpacing: '0.3em' }}
+      aria-label={site.name}
+      className={`inline-flex items-center select-none ${className}`}
     >
-      {site.name}
+      <Monogram className="h-8 w-auto text-accent [filter:drop-shadow(0_0_6px_var(--glow-strong))]" />
     </a>
   )
 }
@@ -113,7 +123,7 @@ export default function HomePage() {
             initial={{ opacity: 1 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] } }}
-            className="fixed inset-0 z-[70] bg-[#050505] flex items-center justify-center"
+            className="fixed inset-0 z-[70] bg-bg flex items-center justify-center"
             aria-hidden="true"
           >
             <motion.div
@@ -126,8 +136,8 @@ export default function HomePage() {
                 initial={{ letterSpacing: '0.32em', opacity: 0 }}
                 animate={{ letterSpacing: '0.3em', opacity: 1 }}
                 transition={{ delay: 0.15, duration: 1.05, ease: [0.22, 1, 0.36, 1] }}
-                className="text-[clamp(2.6rem,11vw,5.6rem)] italic leading-none text-[#E8E0D8]"
-                style={{ fontFamily: 'var(--font-playfair)' }}
+                className="text-[clamp(2.6rem,11vw,5.6rem)] italic leading-none text-fg"
+                style={{ fontFamily: 'var(--font-display)' }}
               >
                 {site.name}
               </motion.span>
@@ -136,7 +146,7 @@ export default function HomePage() {
                 initial={{ scaleX: 0, opacity: 0 }}
                 animate={{ scaleX: 1, opacity: 1 }}
                 transition={{ delay: 0.35, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-                className="w-14 h-px bg-[#B22222]/65"
+                className="w-14 h-px bg-accent/65"
               />
             </motion.div>
           </motion.div>
@@ -151,8 +161,8 @@ export default function HomePage() {
         style={
           showStickyNav
             ? {
-                backgroundColor: 'rgba(10,10,10,0.97)',
-                borderBottom: '1px solid var(--red-border)',
+                backgroundColor: 'color-mix(in srgb, var(--bg) 97%, transparent)',
+                borderBottom: '1px solid var(--accent-border)',
               }
             : { backgroundColor: 'transparent', borderBottom: '1px solid transparent' }
         }
@@ -163,16 +173,18 @@ export default function HomePage() {
           pointer-events-auto
         `}
       >
-        <NavbarLogo className="text-[10px] shrink-0" />
+        <NavbarLogo className="text-[11px] shrink-0" />
 
-        <div className="flex flex-1 items-center justify-center gap-6 lg:gap-8 min-w-0">
+        <div className="flex flex-1 items-center justify-center gap-4 xl:gap-8 min-w-0">
           {NAV_LINKS.map(({ label, href, external }) => (
             <a
               key={`sticky-${label}`}
               href={href}
               {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-              className="text-[9px] uppercase tracking-[0.34em] text-[#E8E0D8]/58 hover:text-[#B22222] transition-colors duration-300 whitespace-nowrap"
-              style={{ fontFamily: 'var(--font-jost)' }}
+              className={`text-[11px] uppercase tracking-[0.18em] xl:tracking-[0.34em] text-muted hover:text-accent transition-colors duration-300 whitespace-nowrap ${
+                external ? 'hidden xl:inline' : '' /* doublon du bouton « Écrire sur Telegram » */
+              }`}
+              style={{ fontFamily: 'var(--font-ui)' }}
             >
               {label}
             </a>
@@ -183,10 +195,10 @@ export default function HomePage() {
           href={site.links.telegram}
           target="_blank"
           rel="noopener noreferrer"
-          className="shrink-0 px-4 py-2 text-[9px] uppercase tracking-[0.28em] text-[#E8E0D8]/85 transition-colors duration-300 hover:text-[color:var(--red-bright)] border"
+          className="glow-box hidden lg:block shrink-0 px-4 py-2 text-[11px] uppercase tracking-[0.28em] text-fg/85 transition-colors duration-300 hover:text-accent border"
           style={{
-            fontFamily: 'var(--font-jost)',
-            borderColor: 'var(--red-primary)',
+            fontFamily: 'var(--font-ui)',
+            borderColor: 'var(--accent)',
           }}
         >
           Écrire sur Telegram
@@ -194,9 +206,9 @@ export default function HomePage() {
 
         <div className="relative group shrink-0">
           <Link
-            href="/blog"
-            className="text-[9px] uppercase tracking-[0.3em] text-[#B22222]/85 hover:text-[#B22222] transition-colors duration-300"
-            style={{ fontFamily: 'var(--font-jost)' }}
+            href="/pratiques"
+            className="text-[11px] uppercase tracking-[0.3em] text-accent hover:text-accent transition-colors duration-300"
+            style={{ fontFamily: 'var(--font-ui)' }}
           >
             Ressources
           </Link>
@@ -213,42 +225,35 @@ export default function HomePage() {
           >
             <div
               className="
-                border border-[#B22222]/20 bg-[#0A0A0A]/95 backdrop-blur-md
-                px-4 py-3 flex flex-col gap-2 shadow-[0_14px_38px_rgba(0,0,0,0.38)]
+                border border-accent/20 bg-bg/95 backdrop-blur-md
+                px-4 py-3 flex flex-col gap-2 shadow-deep
               "
             >
               <Link
                 href="/pratiques"
-                className="text-[9px] uppercase tracking-[0.24em] text-[#E8E0D8]/65 hover:text-[#B22222] transition-colors duration-300"
-                style={{ fontFamily: 'var(--font-jost)' }}
+                className="text-[11px] uppercase tracking-[0.24em] text-muted hover:text-accent transition-colors duration-300"
+                style={{ fontFamily: 'var(--font-ui)' }}
               >
                 Pratiques
               </Link>
               <Link
                 href="/protocole"
-                className="text-[9px] uppercase tracking-[0.24em] text-[#E8E0D8]/65 hover:text-[#B22222] transition-colors duration-300"
-                style={{ fontFamily: 'var(--font-jost)' }}
+                className="text-[11px] uppercase tracking-[0.24em] text-muted hover:text-accent transition-colors duration-300"
+                style={{ fontFamily: 'var(--font-ui)' }}
               >
                 Protocole
-              </Link>
-              <Link
-                href="/blog"
-                className="text-[9px] uppercase tracking-[0.24em] text-[#E8E0D8]/65 hover:text-[#B22222] transition-colors duration-300"
-                style={{ fontFamily: 'var(--font-jost)' }}
-              >
-                Journal
               </Link>
             </div>
           </div>
         </div>
 
-        <div className="hidden lg:flex items-center gap-3 pl-2 ml-1 border-l border-[#E8E0D8]/10">
+        <div className="hidden lg:flex items-center gap-3 pl-2 ml-1 border-l border-brown">
           <a
             href={site.links.x}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="X"
-            className="text-[#E8E0D8]/40 hover:text-[#B22222]/70 transition-colors duration-300"
+            className="text-muted hover:text-accent transition-colors duration-300"
           >
             <X size={14} strokeWidth={1} aria-hidden="true" />
           </a>
@@ -260,7 +265,7 @@ export default function HomePage() {
         aria-expanded={menuOpen}
         aria-controls="mobile-menu"
         aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
-        className="fixed top-5 right-5 z-[60] p-2 rounded-sm border border-[#B22222]/28 bg-[#0A0A0A]/78 backdrop-blur-sm text-[#E8E0D8] hover:text-[#B22222] transition-colors duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#B22222]/60 md:hidden"
+        className="fixed top-5 right-5 z-[60] p-2 rounded-sm border border-accent/28 bg-bg/78 backdrop-blur-sm text-fg hover:text-accent transition-colors duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/60 md:hidden"
       >
         {menuOpen
           ? <X size={20} strokeWidth={1} aria-hidden="true" />
@@ -273,37 +278,11 @@ export default function HomePage() {
       ════════════════════════════════════════════════════════ */}
       <main
         id="hero"
-        className="relative z-10 w-full h-[100dvh] min-h-[600px] overflow-hidden flex flex-col bg-[#0A0A0A]"
+        className="relative z-10 w-full h-[100dvh] min-h-[600px] overflow-hidden flex flex-col bg-bg"
         aria-label={`Hero — ${site.name}`}
       >
-        {/* Fond image */}
-        <div className="absolute inset-0 z-0" aria-hidden="true">
-          <Image
-            src="/media/hero.jpg"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-top"
-            onError={(event) => {
-              event.currentTarget.style.display = 'none'
-            }}
-          />
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                'linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(10,10,10,0) 30%, rgba(10,10,10,0.65) 65%, #0A0A0A 100%)',
-            }}
-          />
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                'linear-gradient(180deg, rgba(10,10,10,0.2) 0%, rgba(10,10,10,0.6) 60%, rgba(10,10,10,1) 100%)',
-            }}
-          />
-        </div>
+        {/* Fond vidéo (repli image + overlay dégradé + filigrane) */}
+        <HeroVideo />
 
         {/* Navigation */}
         <nav
@@ -315,8 +294,9 @@ export default function HomePage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.3, duration: 0.8 }}
+              className="md:hidden" /* en md+, le logo est dans la barre fixe */
             >
-              <NavbarLogo className="text-[10px] text-[#E8E0D8]" />
+              <NavbarLogo className="text-[11px] text-fg" />
             </motion.div>
           )}
 
@@ -334,12 +314,12 @@ export default function HomePage() {
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="fixed inset-0 z-[55] bg-[#0A0A0A] flex flex-col items-center justify-start gap-6 overflow-y-auto px-6 pt-24 pb-10"
+              className="fixed inset-0 z-[55] bg-bg flex flex-col items-center justify-start gap-6 overflow-y-auto px-6 pt-24 pb-10"
             >
               <button
                 onClick={() => setMenuOpen(false)}
                 aria-label="Fermer le menu"
-                className="absolute top-6 right-6 p-2 text-[#E8E0D8]/40 hover:text-[#B22222] transition-colors"
+                className="absolute top-6 right-6 p-2 text-muted hover:text-accent transition-colors"
               >
                 <X size={20} strokeWidth={1} />
               </button>
@@ -355,8 +335,8 @@ export default function HomePage() {
                   animate="visible"
                   exit="exit"
                   onClick={() => setMenuOpen(false)}
-                  className="text-xl tracking-[0.18em] uppercase italic text-[#E8E0D8]/75 hover:text-[#B22222] transition-colors duration-300"
-                  style={{ fontFamily: 'var(--font-playfair)' }}
+                  className="text-xl tracking-[0.18em] uppercase italic text-fg/75 hover:text-accent transition-colors duration-300"
+                  style={{ fontFamily: 'var(--font-display)' }}
                 >
                   {label}
                 </motion.a>
@@ -372,10 +352,10 @@ export default function HomePage() {
                 animate="visible"
                 exit="exit"
                 onClick={() => setMenuOpen(false)}
-                className="mt-1 px-5 py-2.5 text-[9px] uppercase tracking-[0.24em] text-[#E8E0D8]/90 transition-colors duration-300 hover:text-[color:var(--red-bright)] border"
+                className="glow-box mt-1 px-5 py-2.5 text-[11px] uppercase tracking-[0.24em] text-fg/90 transition-colors duration-300 hover:text-accent border"
                 style={{
-                  fontFamily: 'var(--font-jost)',
-                  borderColor: 'var(--red-primary)',
+                  fontFamily: 'var(--font-ui)',
+                  borderColor: 'var(--accent)',
                 }}
               >
                 Écrire sur Telegram
@@ -390,8 +370,8 @@ export default function HomePage() {
                 className="mt-2 flex flex-col items-center gap-3"
               >
                 <span
-                  className="text-[8px] tracking-[0.35em] uppercase text-[#E8E0D8]/28"
-                  style={{ fontFamily: 'var(--font-jost)' }}
+                  className="text-[11px] tracking-[0.35em] uppercase text-muted"
+                  style={{ fontFamily: 'var(--font-ui)' }}
                 >
                   Ressources
                 </span>
@@ -399,26 +379,18 @@ export default function HomePage() {
                   <Link
                     href="/pratiques"
                     onClick={() => setMenuOpen(false)}
-                    className="text-[11px] tracking-[0.22em] uppercase text-[#E8E0D8]/62 hover:text-[#B22222] transition-colors duration-300"
-                    style={{ fontFamily: 'var(--font-jost)' }}
+                    className="text-[11px] tracking-[0.22em] uppercase text-muted hover:text-accent transition-colors duration-300"
+                    style={{ fontFamily: 'var(--font-ui)' }}
                   >
                     Pratiques
                   </Link>
                   <Link
                     href="/protocole"
                     onClick={() => setMenuOpen(false)}
-                    className="text-[11px] tracking-[0.22em] uppercase text-[#E8E0D8]/62 hover:text-[#B22222] transition-colors duration-300"
-                    style={{ fontFamily: 'var(--font-jost)' }}
+                    className="text-[11px] tracking-[0.22em] uppercase text-muted hover:text-accent transition-colors duration-300"
+                    style={{ fontFamily: 'var(--font-ui)' }}
                   >
                     Protocole
-                  </Link>
-                  <Link
-                    href="/blog"
-                    onClick={() => setMenuOpen(false)}
-                    className="text-[11px] tracking-[0.22em] uppercase text-[#E8E0D8]/62 hover:text-[#B22222] transition-colors duration-300"
-                    style={{ fontFamily: 'var(--font-jost)' }}
-                  >
-                    Journal
                   </Link>
                 </div>
               </motion.div>
@@ -434,7 +406,7 @@ export default function HomePage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="X"
-                  className="text-[#E8E0D8]/40 hover:text-[#B22222]/70 transition-colors duration-300"
+                  className="text-muted hover:text-accent transition-colors duration-300"
                 >
                   <X size={14} strokeWidth={1} aria-hidden="true" />
                 </a>
@@ -444,7 +416,7 @@ export default function HomePage() {
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ delay: 0.5, duration: 1 }}
-                className="w-8 h-px bg-[#B22222]/50 mt-4"
+                className="w-8 h-px bg-accent/50 mt-4"
                 aria-hidden="true"
               />
             </motion.div>
@@ -461,46 +433,39 @@ export default function HomePage() {
           >
             <motion.div
               variants={lineExpand}
-              className="w-10 h-px bg-[#B22222] mb-5 self-center"
+              className="w-10 h-px bg-accent mb-5 self-center"
               aria-hidden="true"
             />
 
-            <motion.p
-              variants={fadeUp}
-              className="text-[9px] md:text-[10px] tracking-[0.28em] uppercase font-light text-[#E8E0D8]/70 text-center mb-5 max-w-[min(100%,28rem)] px-2"
-              style={{ fontFamily: 'var(--font-jost)' }}
-            >
-              👑  Foot Goddess · Findom  👑
-            </motion.p>
-
             <motion.h1
               variants={fadeUp}
-              className="text-[clamp(2.4rem,12vw,6.5rem)] leading-[0.95] tracking-tight text-[#E8E0D8] font-normal text-center"
-              style={{ fontFamily: 'var(--font-playfair)' }}
+              className="text-[clamp(2.4rem,12vw,6.5rem)] leading-[0.95] tracking-tight text-fg font-normal text-center"
+              style={{ fontFamily: 'var(--font-display)' }}
             >
               {site.name}
             </motion.h1>
 
             <motion.p
               variants={fadeUp}
-              className="mt-3 text-[clamp(1.5rem,6vw,2.75rem)] leading-tight text-[#B22222] italic font-normal text-center mb-5"
-              style={{ fontFamily: 'var(--font-playfair)' }}
+              className="glow-text mt-3 text-[clamp(1.15rem,4.8vw,2rem)] leading-snug text-accent italic font-normal text-center mb-5 max-w-[min(100%,34rem)] text-balance"
+              style={{ fontFamily: 'var(--font-display)' }}
             >
-              La Déesse
+              <span className="whitespace-nowrap">Findom · Domination ·</span>{' '}
+              <span className="whitespace-nowrap">Lille / Paris / toute la France</span>
             </motion.p>
 
             <motion.p
               variants={fadeUp}
-              className="text-[11px] md:text-[12px] tracking-[0.12em] font-light text-[#E8E0D8]/55 text-center max-w-md px-4 mb-10"
-              style={{ fontFamily: 'var(--font-jost)' }}
+              className="text-[14px] md:text-[17px] tracking-[0.08em] font-normal text-fg/85 text-center max-w-md px-4 mb-10"
+              style={{ fontFamily: 'var(--font-ui)' }}
             >
-              Adorez. Payez. Ne demandez rien en retour.
+              Tu es là pour payer. Pas pour discuter.
             </motion.p>
           </motion.div>
         )}
 
         {/* CTA zone pouce */}
-        <div className="relative z-10 pb-12 px-8 flex flex-col items-center gap-3">
+        <div className="relative z-10 pb-28 md:pb-12 px-8 flex flex-col items-center gap-3">
           {mounted && (
             <>
               <motion.a
@@ -512,15 +477,15 @@ export default function HomePage() {
                 transition={{ delay: 1.55, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
                 whileHover={{ scale: 1.015 }}
                 whileTap={{ scale: 0.97 }}
-                className="group relative w-full max-w-[280px] py-[18px] px-6 text-center border border-[#B22222]/38 hover:border-[#B22222]/80 transition-colors duration-500 overflow-hidden focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#B22222]/60"
+                className="glow-box group relative w-full max-w-[280px] py-[18px] px-6 text-center border border-accent/40 hover:border-accent/80 transition-colors duration-500 overflow-hidden focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/60"
                 style={{ animation: 'luxePulse 3.8s ease-in-out 2.8s infinite' }}
                 aria-label="Écrire sur Telegram"
               >
-                <span aria-hidden="true" className="absolute inset-0 bg-[#B22222]/0 group-hover:bg-[#B22222]/8 transition-colors duration-500" />
-                <span aria-hidden="true" className="absolute top-0 -left-full h-full w-1/2 bg-gradient-to-r from-transparent via-[#B22222]/22 to-transparent group-hover:left-[160%] transition-[left] duration-700 ease-out" />
+                <span aria-hidden="true" className="absolute inset-0 bg-accent/0 group-hover:bg-accent/8 transition-colors duration-500" />
+                <span aria-hidden="true" className="absolute top-0 -left-full h-full w-1/2 bg-gradient-to-r from-transparent via-accent/22 to-transparent group-hover:left-[160%] transition-[left] duration-700 ease-out" />
                 <span
-                  className="relative z-10 text-[9px] tracking-[0.35em] uppercase font-light text-[#E8E0D8]"
-                  style={{ fontFamily: 'var(--font-jost)' }}
+                  className="relative z-10 text-[11px] tracking-[0.35em] uppercase font-normal text-fg"
+                  style={{ fontFamily: 'var(--font-ui)' }}
                 >
                   Écrire sur Telegram
                 </span>
@@ -529,17 +494,25 @@ export default function HomePage() {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
+                transition={{ delay: 1.9, duration: 0.8 }}
+              >
+                <ContactLinks />
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
                 transition={{ delay: 2.0, duration: 0.8 }}
                 className="flex items-center gap-3"
               >
-                <div className="w-px h-2 bg-[#E8E0D8]/15" aria-hidden="true" />
+                <div className="w-px h-2 bg-brown" aria-hidden="true" />
                 <span
-                  className="text-[7.5px] tracking-[0.3em] uppercase text-[#E8E0D8]/22"
-                  style={{ fontFamily: 'var(--font-jost)' }}
+                  className="text-[11px] tracking-[0.22em] uppercase text-muted text-center"
+                  style={{ fontFamily: 'var(--font-ui)' }}
                 >
                   Tribute obligatoire · Aucune exception
                 </span>
-                <div className="w-px h-2 bg-[#E8E0D8]/15" aria-hidden="true" />
+                <div className="w-px h-2 bg-brown" aria-hidden="true" />
               </motion.div>
             </>
           )}
@@ -549,9 +522,15 @@ export default function HomePage() {
       {/* ════════════════════════════════════════════════════════
           SECTIONS
       ════════════════════════════════════════════════════════ */}
+      <SocialProofBar  />
       <AboutSection    />
       <ServicesSection />
+      <ProtocolSteps   />
+      <UpcomingDates   />
       <TeasingSection  />
+      <Testimonials    />
+      <Faq             />
+      <CastingSection  />
       <Footer          />
     </>
   )

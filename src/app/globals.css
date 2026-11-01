@@ -1,66 +1,49 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap');
 @import "tailwindcss";
 
 /* ─────────────────────────────────────────────────────────────────
-   VARIABLES — palette signature (rouge + anthracite)
+   VARIABLES — thème gameuse brune, luxe, néon rose
+   Source unique des couleurs : ne jamais coder une couleur en dur ailleurs.
 ───────────────────────────────────────────────────────────────── */
 :root {
-  /* Fonds */
-  --bg-primary:        #0A0A0A;
-  --bg-secondary:      #111111;
-  --bg-card:           #161616;
-  --bg-elevated:       #1E1E1E;
+  /* Palette */
+  --bg:        #0B0710; /* fond */
+  --surface:   #1A0F1C; /* surfaces */
+  --accent:    #FF2E93; /* accent rose néon (le seul dominant) */
+  --accent-2:  #C2185B; /* secondaire */
+  --cold:      #8B5CF6; /* froid, usage très limité */
+  --fg:        #F5E9F0; /* texte */
+  --muted:     #B79AAE; /* texte atténué */
+  --brown:     #3A2220; /* marron chaud */
 
-  /* Rouge profond — couleur signature */
-  --red-primary:       #8B1A1A;
-  --red-bright:        #B22222;
-  --red-dark:          #5C0F0F;
-  --red-glow:          rgba(139,26,26,0.15);
-  --red-border:        rgba(139,26,26,0.30);
+  /* Dérivés (toujours calculés depuis la palette) */
+  --accent-border: color-mix(in srgb, var(--accent) 32%, transparent);
+  --accent-edge:   color-mix(in srgb, var(--accent) 55%, transparent);
+  --glow-soft:     color-mix(in srgb, var(--accent) 28%, transparent);
+  --glow-strong:   color-mix(in srgb, var(--accent) 55%, transparent);
 
-  /* Anthracite / gris */
-  --grey-mid:          #2A2A2A;
-  --grey-light:        #3D3D3D;
-  --grey-border:       rgba(255,255,255,0.06);
-
-  /* Textes */
-  --ivory:             #F0EAE0;
-  --text-primary:      #E8E0D8;
-  --text-secondary:    #A09890;
-  --text-muted:        #5A5250;
-
-  /* Accents or (usage très limité) */
-  --gold:              #C4A35A;
-  --gold-border:       rgba(196,163,90,0.20);
-
-  /* Typographie (Google Fonts — @import en tête de fichier) */
-  --font-jost:         'Jost', sans-serif;
-  --font-playfair:     'Playfair Display', Georgia, serif;
-  --font-cormorant:    'Cormorant Garamond', Georgia, serif;
+  /* Typographie (polices chargées par next/font dans layout.tsx) */
+  --font-display: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
+  --font-ui:      var(--font-rajdhani), 'Rajdhani', system-ui, sans-serif;
 }
 
 @theme inline {
-  /* Compat Tailwind : couleurs sémantiques → tokens */
-  --color-background: var(--bg-primary);
-  --color-foreground: var(--text-primary);
-  --color-bg-primary: var(--bg-primary);
-  --color-bg-secondary: var(--bg-secondary);
-  --color-bg-card: var(--bg-card);
-  --color-bg-elevated: var(--bg-elevated);
-  --color-red-primary: var(--red-primary);
-  --color-red-bright: var(--red-bright);
-  --color-red-dark: var(--red-dark);
-  --color-grey-mid: var(--grey-mid);
-  --color-grey-light: var(--grey-light);
-  --color-border: var(--grey-border);
-  --color-ivory: var(--ivory);
-  --color-text-primary: var(--text-primary);
-  --color-text-secondary: var(--text-secondary);
-  --color-text-muted: var(--text-muted);
-  --color-gold: var(--gold);
-  --font-sans: var(--font-jost);
-  --font-serif: var(--font-playfair);
-  --font-mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
+  /* Couleurs → utilitaires Tailwind : bg-bg, bg-surface, text-accent, text-fg, text-muted, border-brown… */
+  --color-bg:        var(--bg);
+  --color-surface:   var(--surface);
+  --color-accent:    var(--accent);
+  --color-accent-2:  var(--accent-2);
+  --color-cold:      var(--cold);
+  --color-fg:        var(--fg);
+  --color-muted:     var(--muted);
+  --color-brown:     var(--brown);
+
+  --font-serif: var(--font-display);
+  --font-sans:  var(--font-ui);
+
+  /* Ombres : glow rose subtil + profondeur */
+  --shadow-glow:        0 0 14px -2px var(--glow-soft);
+  --shadow-glow-strong: 0 0 28px -2px var(--glow-strong);
+  --shadow-deep:        0 40px 120px color-mix(in srgb, var(--bg) 70%, transparent);
 }
 
 /* ─────────────────────────────────────────────────────────────────
@@ -73,55 +56,132 @@ html {
 }
 
 body {
-  font-family: 'Jost', sans-serif;
-  font-weight: 300;
-  background: var(--bg-primary);
-  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-weight: 400;
+  background: var(--bg);
+  color: var(--fg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Halo d'ambiance discret : beaucoup d'espace vide, un seul rose dominant */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Ccircle cx='30' cy='30' r='20' stroke='%238B1A1A' stroke-width='0.3' stroke-opacity='0.07'/%3E%3Ccircle cx='30' cy='30' r='10' stroke='%238B1A1A' stroke-width='0.2' stroke-opacity='0.05'/%3E%3Cline x1='30' y1='0' x2='30' y2='60' stroke='%238B1A1A' stroke-width='0.2' stroke-opacity='0.04'/%3E%3Cline x1='0' y1='30' x2='60' y2='30' stroke='%238B1A1A' stroke-width='0.2' stroke-opacity='0.04'/%3E%3C/g%3E%3C/svg%3E");
-  background-size: 60px 60px;
+  background:
+    radial-gradient(60rem 40rem at 85% -10%, color-mix(in srgb, var(--accent) 7%, transparent), transparent 70%),
+    radial-gradient(50rem 36rem at -10% 110%, color-mix(in srgb, var(--cold) 6%, transparent), transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
 
 h1,
-h2 {
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  color: var(--ivory);
-}
-
+h2,
 h3,
 h4 {
-  font-family: 'Playfair Display', serif;
-  font-weight: 400;
+  font-family: var(--font-display);
+  font-weight: 500;
+  color: var(--fg);
+}
+
+h1,
+h2 {
+  font-weight: 600;
 }
 
 blockquote,
 em.signature {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-display);
   font-style: italic;
 }
 
+/* Mots en italique : accent rose + glow subtil, accentué au survol */
+em {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--accent);
+  text-shadow: 0 0 16px var(--glow-soft);
+  transition: text-shadow 0.4s ease;
+}
+
+em:hover,
+h1:hover em,
+h2:hover em,
+h3:hover em {
+  text-shadow: 0 0 26px var(--glow-strong);
+}
+
 /* ─────────────────────────────────────────────────────────────────
-   ANIMATIONS GLOBALES
+   UTILITAIRES GLOW (boutons, bordures, mots)
+───────────────────────────────────────────────────────────────── */
+@utility glow-box {
+  box-shadow: var(--shadow-glow);
+  transition: box-shadow 0.4s ease, border-color 0.4s ease;
+  &:hover,
+  &:focus-visible {
+    box-shadow: var(--shadow-glow-strong);
+  }
+}
+
+@utility glow-text {
+  text-shadow: 0 0 16px var(--glow-soft);
+  transition: text-shadow 0.4s ease;
+  &:hover {
+    text-shadow: 0 0 26px var(--glow-strong);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   ANIMATIONS
 ───────────────────────────────────────────────────────────────── */
 
-/* Pulsation — bordure CTA (rouge signature) */
+/* Pulsation douce — bordure CTA */
 @keyframes luxePulse {
   0%,
   100% {
-    border-color: var(--red-border);
+    border-color: var(--accent-border);
   }
   50% {
-    border-color: color-mix(in srgb, var(--red-bright) 72%, transparent);
+    border-color: var(--accent-edge);
+  }
+}
+
+/* Apparition au scroll (pages sans framer-motion) : fade + translate.
+   Progressive : ignorée si le navigateur ne gère pas animation-timeline. */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal,
+    .reveal-group > * {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 40%;
+    }
+  }
+}
+
+/* Mouvement réduit : tout est statique */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
@@ -133,17 +193,21 @@ em.signature {
   width: 4px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg-primary);
+  background: var(--bg);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--grey-mid);
+  background: var(--brown);
   border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--red-bright);
+  background: var(--accent);
 }
 
 ::selection {
-  background: var(--red-glow);
-  color: var(--ivory);
+  background: var(--glow-strong);
+  color: var(--fg);
+}
+
+:focus-visible {
+  outline-color: var(--accent);
 }

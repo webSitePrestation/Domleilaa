@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Fichier autonome : les couleurs reprennent les tokens de globals.css (--bg #0B0710, --accent #FF2E93). -->
+  <rect width="64" height="64" rx="14" fill="#0B0710"/>
+  <g transform="translate(-4 6.4) scale(0.8)" fill="none" stroke="#FF2E93" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 10 H24 C41 10 50 20 50 32 C50 44 41 54 24 54 H12 Z"/>
+    <path d="M62 10 V54 H78"/>
+  </g>
+</svg>

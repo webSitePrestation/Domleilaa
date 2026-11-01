@@ -9,6 +9,12 @@ const projectRoot = path.dirname(fileURLToPath(import.meta.url));
  * (ex. `C:\Users\...\Documents`) au lieu de ce projet, ce qui provoque « Can't resolve 'tailwindcss' ».
  */
 const nextConfig: NextConfig = {
+  poweredByHeader: false,
+  compress: true,
+  images: {
+    // Les JPG déposés dans /public/media sont servis en AVIF / WebP.
+    formats: ["image/avif", "image/webp"],
+  },
   turbopack: {
     root: projectRoot,
   },
