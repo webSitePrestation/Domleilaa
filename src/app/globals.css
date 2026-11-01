@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap');
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────────
+   VARIABLES — palette signature (rouge + anthracite)
+───────────────────────────────────────────────────────────────── */
+:root {
+  /* Fonds */
+  --bg-primary:        #0A0A0A;
+  --bg-secondary:      #111111;
+  --bg-card:           #161616;
+  --bg-elevated:       #1E1E1E;
+
+  /* Rouge profond — couleur signature */
+  --red-primary:       #8B1A1A;
+  --red-bright:        #B22222;
+  --red-dark:          #5C0F0F;
+  --red-glow:          rgba(139,26,26,0.15);
+  --red-border:        rgba(139,26,26,0.30);
+
+  /* Anthracite / gris */
+  --grey-mid:          #2A2A2A;
+  --grey-light:        #3D3D3D;
+  --grey-border:       rgba(255,255,255,0.06);
+
+  /* Textes */
+  --ivory:             #F0EAE0;
+  --text-primary:      #E8E0D8;
+  --text-secondary:    #A09890;
+  --text-muted:        #5A5250;
+
+  /* Accents or (usage très limité) */
+  --gold:              #C4A35A;
+  --gold-border:       rgba(196,163,90,0.20);
+
+  /* Typographie (Google Fonts — @import en tête de fichier) */
+  --font-jost:         'Jost', sans-serif;
+  --font-playfair:     'Playfair Display', Georgia, serif;
+  --font-cormorant:    'Cormorant Garamond', Georgia, serif;
+}
+
+@theme inline {
+  /* Compat Tailwind : couleurs sémantiques → tokens */
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--text-primary);
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-bg-card: var(--bg-card);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-red-primary: var(--red-primary);
+  --color-red-bright: var(--red-bright);
+  --color-red-dark: var(--red-dark);
+  --color-grey-mid: var(--grey-mid);
+  --color-grey-light: var(--grey-light);
+  --color-border: var(--grey-border);
+  --color-ivory: var(--ivory);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-gold: var(--gold);
+  --font-sans: var(--font-jost);
+  --font-serif: var(--font-playfair);
+  --font-mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   BASE
+───────────────────────────────────────────────────────────────── */
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+}
+
+body {
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Ccircle cx='30' cy='30' r='20' stroke='%238B1A1A' stroke-width='0.3' stroke-opacity='0.07'/%3E%3Ccircle cx='30' cy='30' r='10' stroke='%238B1A1A' stroke-width='0.2' stroke-opacity='0.05'/%3E%3Cline x1='30' y1='0' x2='30' y2='60' stroke='%238B1A1A' stroke-width='0.2' stroke-opacity='0.04'/%3E%3Cline x1='0' y1='30' x2='60' y2='30' stroke='%238B1A1A' stroke-width='0.2' stroke-opacity='0.04'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+h1,
+h2 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  color: var(--ivory);
+}
+
+h3,
+h4 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 400;
+}
+
+blockquote,
+em.signature {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   ANIMATIONS GLOBALES
+───────────────────────────────────────────────────────────────── */
+
+/* Pulsation — bordure CTA (rouge signature) */
+@keyframes luxePulse {
+  0%,
+  100% {
+    border-color: var(--red-border);
+  }
+  50% {
+    border-color: color-mix(in srgb, var(--red-bright) 72%, transparent);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   UTILITAIRES GLOBAUX
+───────────────────────────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--grey-mid);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--red-bright);
+}
+
+::selection {
+  background: var(--red-glow);
+  color: var(--ivory);
+}
