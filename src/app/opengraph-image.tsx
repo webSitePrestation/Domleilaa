@@ -1,7 +1,7 @@
-import { renderOgCard } from '@/lib/og-card'
+import { OG_ALT, OG_SIZE, renderOgCard } from '@/lib/og-card'
 
-export const alt = 'Domleilaa — Findom · Domination · Lille / Paris'
-export const size = { width: 1200, height: 630 }
+export const alt = OG_ALT
+export const size = OG_SIZE
 export const contentType = 'image/png'
 
 export default function OpenGraphImage() {

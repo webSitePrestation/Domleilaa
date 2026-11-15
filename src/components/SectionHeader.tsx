@@ -12,7 +12,7 @@ export default function SectionHeader({
   aside?: string
 }) {
   return (
-    <div className="mb-14 lg:mb-16">
+    <div className="mb-12 sm:mb-14 lg:mb-16">
       <Reveal className="flex items-center gap-4 flex-wrap mb-6">
         <div className="w-8 h-px bg-accent flex-shrink-0" />
         <span
@@ -36,7 +36,7 @@ export default function SectionHeader({
         {aside && (
           <Reveal delay={0.18} className="max-w-xs lg:text-right">
             <p
-              className="text-[15px] leading-[1.8] text-muted font-normal whitespace-pre-line"
+              className="text-[16px] leading-[1.75] md:text-[15px] md:leading-[1.8] text-muted font-normal whitespace-pre-line"
               style={{ fontFamily: 'var(--font-ui)' }}
             >
               {aside}

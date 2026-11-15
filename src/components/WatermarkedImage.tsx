@@ -12,7 +12,7 @@ function join(...parts: Array<string | false | undefined>) {
 }
 
 /* ─────────────────────────────────────────────────────────────────
-   FILIGRANE — monogramme DL + « @domleilaa », discret, en bas à droite
+   FILIGRANE — monogramme DA + handle, discret, en bas à droite
 ───────────────────────────────────────────────────────────────── */
 // Une classe de position fournie (top-, bottom-, left-, right-, inset-) remplace la position par défaut
 const HAS_POSITION = /(^|\s)(?:[\w-]+:)*-?(?:top|bottom|left|right|inset)-/
@@ -66,7 +66,7 @@ type WatermarkedImageProps = Omit<ImageProps, 'src' | 'alt' | 'onLoad' | 'onErro
 /**
  * Toute image publique passe par ce composant.
  * - placeholder propre tant que le fichier n'existe pas (ou ne charge pas)
- * - filigrane « @domleilaa » en bas à droite, une fois l'image affichée
+ * - filigrane du handle en bas à droite, une fois l'image affichée
  * - mode `fill` : remplit son parent ; sinon : épouse la taille de l'image
  */
 export default function WatermarkedImage({

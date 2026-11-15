@@ -6,8 +6,7 @@ import { MaybeLink } from '@/components/ContactLinks'
 
 const PROFILE_LINKS = [
   { label: 'X', href: site.links.x },
-  { label: 'Telegram', href: site.links.telegram },
-  { label: 'MYM', href: site.links.mym },
+  { label: 'Linktree', href: site.links.linktree },
 ] as const
 
 const ITEM_CLASS =
@@ -28,14 +27,18 @@ export default function SocialProofBar() {
           className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3"
           style={{ fontFamily: 'var(--font-ui)' }}
         >
-          <li className={ITEM_CLASS}>
-            Active depuis{' '}
-            <strong className="font-semibold text-accent">{proof.activeSince}</strong>
-          </li>
-          <li className={ITEM_CLASS}>
-            <strong className="font-semibold text-accent">{proof.followers}</strong>{' '}
-            abonnés
-          </li>
+          {proof.activeSince !== 'TODO' && (
+            <li className={ITEM_CLASS}>
+              Active depuis{' '}
+              <strong className="font-semibold text-accent">{proof.activeSince}</strong>
+            </li>
+          )}
+          {proof.followers !== 'TODO' && (
+            <li className={ITEM_CLASS}>
+              <strong className="font-semibold text-accent">{proof.followers}</strong>{' '}
+              abonnés
+            </li>
+          )}
           <li className={`${ITEM_CLASS} inline-flex items-center gap-2 text-fg/85`}>
             <BadgeCheck size={14} strokeWidth={1.25} className="text-accent" aria-hidden="true" />
             {proof.officialLabel}

@@ -2,14 +2,15 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { site, isPlaceholderLink } from '@/config/site'
+import { site, isPlaceholderLink, primaryContact } from '@/config/site'
 import ContactLinks from '@/components/ContactLinks'
 
-/* MYM : TODO — affiché en texte grisé (non cliquable) tant que le lien n'est pas renseigné */
+/** Lien grisé (« bientôt ») tant que l'URL est un placeholder. */
 const FOOTER_BAR_LINKS = [
   { label: 'X', href: site.links.x, external: true },
-  { label: 'Telegram', href: site.links.telegram, external: true },
-  { label: 'MYM', href: site.links.mym, external: true },
+  { label: 'Linktree', href: site.links.linktree, external: true },
+  { label: 'Revolut', href: site.links.revolut, external: true },
+  { label: 'PayPal', href: site.links.paypal, external: true },
   { label: 'Mentions légales', href: '/mentions-legales', external: false },
 ] as const
 
@@ -17,6 +18,7 @@ const FOOTER_BAR_LINKS = [
    COMPOSANT
 ───────────────────────────────────────────────────────────────── */
 export default function Footer() {
+  const contact = primaryContact()
   const ref = useRef<HTMLElement>(null)
   const isInView = useInView(ref, { once: true, margin: '-60px' })
 
@@ -40,7 +42,7 @@ export default function Footer() {
           className="text-[11px] tracking-[0.38em] uppercase text-muted font-normal"
           style={{ fontFamily: 'var(--font-ui)' }}
         >
-          Tribute · Adoration · Culte
+          Offrande · Adoration · Appartenance
         </motion.p>
 
         <motion.div
@@ -60,12 +62,12 @@ export default function Footer() {
             className="text-[15px] leading-[1.65] text-muted font-normal"
             style={{ fontFamily: 'var(--font-ui)' }}
           >
-            Mon temps est précieux. Ton portefeuille le sait.
+            Mon plaisir passe avant. Ton portefeuille le sait.
           </p>
         </motion.div>
 
         <motion.a
-          href={site.links.telegram}
+          href={contact.href}
           target="_blank"
           rel="noopener noreferrer"
           initial={{ opacity: 0, y: 20 }}
@@ -73,7 +75,7 @@ export default function Footer() {
           transition={{ delay: 0.32, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           whileHover={{ scale: 1.015 }}
           whileTap={{ scale: 0.97 }}
-          aria-label="Écrire sur Telegram"
+          aria-label={contact.label}
           className="
             group relative
             flex items-center justify-center
@@ -99,7 +101,7 @@ export default function Footer() {
             className="relative z-10 text-[11px] tracking-[0.32em] uppercase font-normal text-fg"
             style={{ fontFamily: 'var(--font-ui)' }}
           >
-            Écrire sur Telegram
+            {contact.label}
           </span>
         </motion.a>
 
@@ -118,7 +120,7 @@ export default function Footer() {
           className="text-[11px] tracking-[0.28em] uppercase text-muted font-normal"
           style={{ fontFamily: 'var(--font-ui)' }}
         >
-          Tribute obligatoire · Sans condition
+          Offrande obligatoire · Sans condition
         </motion.p>
       </div>
 

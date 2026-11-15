@@ -1,11 +1,11 @@
 ---
-description: Règles du projet site Domleilaa
+description: Règles du projet site DeesseAlhya
 alwaysApply: true
 ---
 
 # Projet
-Site vitrine Next.js pour "Domleilaa" (X et Telegram : @domleilaa), créatrice française majeure basée à Lille, qui se déplace partout en France et souvent à Paris. Elle ne montre jamais son visage.
-Le site est adapté depuis un site existant : on garde sa structure, ses composants et son routing.
+Site vitrine Next.js pour "DeesseAlhya" (X : @ursugarbab21), domina marocaine basée à Strasbourg (Grand Est), cashmeets à Paris. Elle ne montre jamais son visage.
+Le site garde sa structure, ses composants et son routing.
 
 # Règles de travail
 - Ne modifie que ce qui est demandé dans le prompt en cours. Ne touche à rien d'autre.
@@ -16,32 +16,33 @@ Le site est adapté depuis un site existant : on garde sa structure, ses composa
 - Termine chaque tâche par un résumé court : fichiers modifiés, TODO restants.
 
 # Contenu et ton
-- Ton : direct, luxe, autoritaire, moqueur. Tutoiement. Phrases courtes. Zéro faute d'orthographe.
-- Aucun contenu sexuellement explicite.
-- Ne cible aucun groupe par origine ou couleur de peau : écris "hommes de tous horizons".
+- Ton : tutoiement, phrases courtes, élégant et prédateur, moqueur, autoritaire. « petits toutous », offrande obligatoire.
+- Signature : « L'élégance d'une reine, la morsure d'une prédatrice. Ta liberté s'arrête là où mon plaisir commence. »
+- Aucun contenu sexuellement explicite. Ballbusting, pieds, latex et cuir restent cadrés : règles, safeword, pas de description graphique.
+- Ne cible aucun groupe par origine ou couleur de peau : écris "hommes de tous horizons". L'origine marocaine est la sienne, pas un filtre.
 - Tout est présenté comme un jeu de rôle consenti et encadré (règles claires, safeword).
 - N'invente jamais de chiffres, de témoignages, de tarifs ou de coordonnées : mets un placeholder marqué `TODO`.
 
 # Design
 - Palette centralisée en variables CSS / config Tailwind, jamais de couleur codée en dur :
-  fond #0B0710, surfaces #1A0F1C, accent #FF2E93, secondaire #C2185B, froid #8B5CF6, texte #F5E9F0, atténué #B79AAE, marron chaud #3A2220.
-- Un seul accent rose dominant, beaucoup d'espace vide, glow rose subtil sur boutons et bordures.
-- Titres en serif élégant (Cormorant Garamond), UI en Rajdhani ou Space Grotesk.
+  fond #050405, surfaces #141012, accent #D64556, secondaire #6B1524, anthracite clair #9A918C, texte #F6F1EE, atténué #BBA9A6, filets #2C2628.
+- Un seul accent bordeaux, beaucoup d'espace vide, glow type latex sur boutons et bordures.
+- Titres en serif élégant (Cormorant Garamond), UI en Rajdhani.
 - Animations douces qui respectent `prefers-reduced-motion`.
 - Mobile first : tout doit être lisible et utilisable sur téléphone.
+- Les images Open Graph, l'icône et l'apple icon recopient ces hex : un SVG ou un ImageResponse ne lit pas les variables CSS.
 
 # Médias
 - Images et vidéos dans `/public/media/`. Utilise `next/image`.
-- Toute image publique passe par le composant `<WatermarkedImage>` (filigrane "@domleilaa").
+- Toute image publique passe par le composant `<WatermarkedImage>` (filigrane = `site.handle`).
 - Les fichiers n'existent pas encore : prévois des placeholders propres qui disparaissent quand ils sont ajoutés.
 - Ne jamais afficher d'adresse précise : seulement la ville.
 
 # Liens
-- Telegram : https://t.me/domleilaa
-- X : https://x.com/domleilaa
-- WhatsApp : https://wa.me/33XXXXXXXXX (TODO)
-- MYM : lien placeholder (TODO)
+- X : https://x.com/ursugarbab21
+- Linktree : placeholder `#` (TODO). Il regroupera Unlockt, Revolut, PayPal, Throne. Tant qu'il est vide, le contact principal est X (`primaryContact()` dans `src/config/site.ts`).
 - Aucun lien vers `/reservation` : cette page n'existe plus.
+- Pas de Telegram, WhatsApp ou MYM tant qu'ils ne sont pas fournis.
 
 # SEO et confidentialité
 - Garde `noindex, nofollow` tant que je ne dis pas de l'enlever.

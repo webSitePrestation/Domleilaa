@@ -135,18 +135,12 @@ export default function MentionsLegalesPage() {
             >
               Cette plateforme peut rediriger vers des services externes :
               {' '}
-              <a href={site.links.telegram} target="_blank" rel="noopener noreferrer" className="text-fg/80 hover:text-accent transition-colors duration-300">
-                Telegram
-              </a>
-              {', '}
               <a href={site.links.x} target="_blank" rel="noopener noreferrer" className="text-fg/80 hover:text-accent transition-colors duration-300">
                 X
               </a>
-              {', '}
-              {/* TODO : WhatsApp et MYM deviennent cliquables dès que les liens sont renseignés dans site.ts */}
-              <MaybeLink href={site.links.whatsapp}>WhatsApp (TODO)</MaybeLink>
-              {' '}et{' '}
-              <MaybeLink href={site.links.mym}>MYM (TODO)</MaybeLink>
+              {' et '}
+              {/* TODO : le Linktree devient cliquable dès que l'URL est renseignée dans site.ts */}
+              <MaybeLink href={site.links.linktree}>Linktree (TODO)</MaybeLink>
               . Leur consultation implique leurs propres conditions d&apos;utilisation.
             </p>
             <div className="w-full h-px bg-accent/25" />
@@ -165,14 +159,10 @@ export default function MentionsLegalesPage() {
             >
               Pour toute demande, le contact s&apos;effectue via
               {' '}
-              <a href={site.links.telegram} target="_blank" rel="noopener noreferrer" className="text-fg/80 hover:text-accent transition-colors duration-300">
-                Telegram
-              </a>
-              {' '}ou{' '}
               <a href={site.links.x} target="_blank" rel="noopener noreferrer" className="text-fg/80 hover:text-accent transition-colors duration-300">
                 X
               </a>
-              .
+              . L&apos;offrande passe par le Linktree (TODO), une fois le lien renseigné.
             </p>
           </section>
         </div>

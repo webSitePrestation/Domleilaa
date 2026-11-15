@@ -2,8 +2,8 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { Crown, Flame, Dog, Sparkles, Lock } from 'lucide-react'
-import { site } from '@/config/site'
+import { Video, Camera, ScrollText, Flame } from 'lucide-react'
+import { site, primaryContact } from '@/config/site'
 
 const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number]
 
@@ -13,84 +13,90 @@ interface Service {
   title:       string
   description: string
   details:     string[]
-  cta:         string
 }
 
-/* 5 cartes. Tarifs : placeholders TODO dans src/config/site.ts */
-const SERVICES: Service[] = [
+/** Quatre séances réelles. Les pratiques sont des options, pas des cartes. */
+const REAL_SESSIONS: Service[] = [
   {
-    icon:      <Crown size={18} strokeWidth={1} />,
-    label:     'Le classique',
-    title:     'Séance générale',
+    icon:      <span className="text-[11px] tracking-[0.2em]">01</span>,
+    label:     'Au sol',
+    title:     'Fétichisme des pieds',
     description:
-      "Tu arrives. Je mène.\nOrdres, regards, silences.\nTu comprends vite qui décide.",
+      "Tu es en bas.\nMes pieds ont ton attention.\nService. Adoration. Silence.",
     details: [
-      `30 min : ${site.prices.general30}`,
-      `1 h : ${site.prices.general60}`,
-      'Règles et safeword fixés avant',
+      `Tarif : ${site.prices.pieds}`,
+      'Règles et safeword avant',
     ],
-    cta: 'Écrire sur Telegram',
+  },
+  {
+    icon:      <span className="text-[11px] tracking-[0.2em]">02</span>,
+    label:     'Tout le registre',
+    title:     'Domination',
+    description:
+      "Toutes les pratiques de domination.\nJe choisis le thème. Tu suis.\nRien sans accord.",
+    details: [
+      `Tarif : ${site.prices.domination}`,
+      `Uro : ${site.prices.uroSupplement}`,
+      site.dominationOptions,
+    ],
   },
   {
     icon:      <Flame size={18} strokeWidth={1} />,
-    label:     'Mental',
-    title:     'Humiliation',
+    label:     'Hard',
+    title:     'Déchéance totale',
     description:
-      "Je te remets à ta place.\nAvec des mots, des rires, du mépris.\nTu rougis. Tu reviens.",
+      "BDSM hard.\nTu ne négocies plus rien.\nLe safeword reste la seule sortie.",
     details: [
-      `30 min : ${site.prices.humiliation30}`,
-      `1 h : ${site.prices.humiliation60}`,
-      'Limites définies avant, safeword actif',
+      `Tarif : ${site.prices.decheance}`,
+      'Latex. Cadre strict. Safeword.',
     ],
-    cta: 'Écrire sur Telegram',
   },
   {
-    icon:      <Dog size={18} strokeWidth={1} />,
-    label:     'Discipline',
-    title:     'Dressage',
+    icon:      <span className="text-[11px] tracking-[0.2em]">04</span>,
+    label:     `${site.city} / Paris`,
+    title:     'Cashmeet',
     description:
-      "Laisse, dog training, prosternation.\nTu te tiens. Tu obéis.\nSans un mot de trop.",
+      "Tu te déplaces. Tu paies. Tu obéis.\nLa ville seulement.\nLe lieu, après validation.",
     details: [
-      `30 min : ${site.prices.dressage30}`,
-      `1 h : ${site.prices.dressage60}`,
-      'Laisse · dog training · prosternation',
+      `À partir de ${site.prices.cashmeetFrom}`,
+      'Offrande avant. Aucune exception.',
     ],
-    cta: 'Écrire sur Telegram',
-  },
-  {
-    icon:      <Sparkles size={18} strokeWidth={1} />,
-    label:     'Service',
-    title:     'Soubrette',
-    description:
-      "Ménage, tenue, consignes.\nEt moqueries pendant que tu t'appliques.\nSolo ou duo.",
-    details: [
-      `30 min : ${site.prices.soubrette30}`,
-      `1 h : ${site.prices.soubrette60}`,
-      'Ménage · moqueries · solo ou duo',
-    ],
-    cta: 'Écrire sur Telegram',
-  },
-  {
-    icon:      <Lock size={18} strokeWidth={1} />,
-    label:     'Sur mesure',
-    title:     'Pratiques sur demande',
-    description:
-      "Une idée précise en tête ?\nTout se discute en privé, hors site.\nJe décide si ça m'amuse.",
-    details: [
-      `30 min : ${site.prices.custom30}`,
-      `1 h : ${site.prices.custom60}`,
-      'Échange privé, hors site',
-    ],
-    cta: 'Écrire sur Telegram',
   },
 ]
 
-/** Cadre des séances, affiché sous les cartes. */
+const VIRTUAL = [
+  {
+    icon:  <Video size={18} strokeWidth={1} />,
+    title: 'Contenu',
+    text:  'Ce que je décide de montrer. Pas ce que tu réclames.',
+    featured: false,
+  },
+  {
+    icon:  <Camera size={18} strokeWidth={1} />,
+    title: 'Snap / cam',
+    text:  'Séance à distance. Tu es là. Je mène.',
+    featured: false,
+  },
+  {
+    icon:  <ScrollText size={18} strokeWidth={1} />,
+    title: 'Contrats d’appartenance',
+    text:  'Du suivi léger au contrôle du quotidien. Règles, argent, emploi du temps.',
+    featured: true,
+  },
+  {
+    icon:  <Flame size={18} strokeWidth={1} />,
+    title: 'Jeux',
+    text:  'Slowdrain. Blackmail de rôle. Domination 24/7. Jeu consenti. Jamais un vrai chantage.',
+    featured: false,
+  },
+]
+
+/** Cadre des cashmeets, affiché sous les cartes. */
 const FRAME_RULES = [
-  'Séances partout en France, en Airbnb.',
-  `Basée à ${site.city}. Souvent à ${site.travelCities.join(', ')}.`,
+  `Cashmeets à ${site.city} et à ${site.travelCities.join(', ')}.`,
+  `Basée à ${site.city}, ${site.region}.`,
   'Consentement, règles claires et safeword obligatoires.',
-  'Jeu de rôle consenti et encadré. Rien d\u2019autre.',
+  'Jeu de rôle consenti et encadré. Latex et cuir, dans ce cadre.',
 ] as const
 
 /* ── Sous-composant card ────────────────────────────────────────── */
@@ -111,7 +117,7 @@ function ServiceCard({
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 36 }}
       transition={{ delay: 0.28 + index * 0.13, duration: 0.9, ease: EASE }}
       className={`
-        group relative flex flex-col gap-6 p-8 lg:p-10
+        group relative flex flex-col gap-6 p-7 sm:p-8 lg:p-10
         border border-accent/20 bg-surface/60 shadow-glow
         transition-[border-color,box-shadow] duration-500 overflow-hidden
         hover:border-accent
@@ -180,11 +186,11 @@ function ServiceCard({
 
       <div className="mt-auto pt-2">
         <a
-          href={site.links.telegram}
+          href={primaryContact().href}
           target="_blank"
           rel="noopener noreferrer"
           className="
-            glow-box block w-full py-4 text-center
+            glow-box flex min-h-14 w-full items-center justify-center py-4 text-center
             text-[11px] tracking-[0.35em] uppercase font-medium
             border border-accent/40 text-fg
             transition-all duration-400
@@ -193,7 +199,7 @@ function ServiceCard({
           "
           style={{ fontFamily: 'var(--font-ui)' }}
         >
-          {service.cta}
+          {primaryContact().label}
         </a>
       </div>
     </motion.div>
@@ -215,7 +221,7 @@ export default function ServicesSection() {
     <section
       id="services"
       aria-label={`Services — ${site.name}`}
-      className="relative w-full bg-bg overflow-hidden py-28 lg:py-40 px-6 md:px-12 lg:px-20"
+      className="relative w-full bg-bg overflow-hidden py-20 sm:py-28 lg:py-40 px-5 sm:px-8 md:px-12 lg:px-20"
     >
       <span
         aria-hidden="true"
@@ -261,30 +267,113 @@ export default function ServicesSection() {
             className="text-[15px] leading-[1.8] text-muted font-normal max-w-xs lg:text-right whitespace-pre-line"
             style={{ fontFamily: 'var(--font-ui)' }}
           >
-            {`Mes conditions ne se négocient pas.\nElles s'acceptent — ou tu passes ton chemin.`}
+            {`Mes conditions ne se négocient pas.\nElles s’acceptent. Ou tu passes.`}
           </motion.p>
         </div>
 
-        {/* 5 cartes : 3 + 2 sur desktop, 2 + 2 + 1 sur tablette, 1 colonne sur mobile */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-5 lg:gap-7">
-          {SERVICES.map((s, i) => (
-            <ServiceCard
-              key={s.title}
-              service={s}
-              index={i}
-              isInView={isInView}
-              className={
-                i < 3
-                  ? 'lg:col-span-2'
-                  : i === 3
-                    ? 'lg:col-span-3'
-                    : 'md:col-span-2 lg:col-span-3'
-              }
-            />
-          ))}
+        <div className="flex flex-col gap-16 sm:gap-20">
+          {/* A. Virtuel */}
+          <div className="flex flex-col gap-8 sm:gap-10">
+            <div className="flex flex-col gap-3">
+              <span
+                className="text-[11px] tracking-[0.5em] uppercase text-accent font-normal"
+                style={{ fontFamily: 'var(--font-ui)' }}
+              >
+                A — Virtuel
+              </span>
+              <h3
+                className="text-[clamp(1.8rem,6vw,2.6rem)] leading-[1.12] text-fg font-normal"
+                style={{ fontFamily: 'var(--font-display)' }}
+              >
+                À distance. <em className="italic font-normal text-accent">Sans relâche.</em>
+              </h3>
+            </div>
+
+            <ul className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+              {VIRTUAL.map((item) => (
+                <li
+                  key={item.title}
+                  className={item.featured ? 'md:col-span-2' : undefined}
+                >
+                  <article
+                    className={`flex h-full flex-col gap-4 border bg-surface/60 p-7 sm:p-8 shadow-glow ${
+                      item.featured ? 'border-accent/50' : 'border-accent/20'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3 text-accent">
+                      {item.icon}
+                      <h4
+                        className="text-[1.35rem] italic font-normal text-fg"
+                        style={{ fontFamily: 'var(--font-display)' }}
+                      >
+                        {item.title}
+                      </h4>
+                    </div>
+                    <p
+                      className="text-[16px] leading-[1.75] text-muted font-normal"
+                      style={{ fontFamily: 'var(--font-ui)' }}
+                    >
+                      {item.text}
+                    </p>
+                    {item.featured && (
+                      <a
+                        href="#contrat"
+                        className="mt-1 inline-flex min-h-12 items-center text-[11px] uppercase tracking-[0.28em] text-accent"
+                        style={{ fontFamily: 'var(--font-ui)' }}
+                      >
+                        Voir les niveaux du contrat
+                      </a>
+                    )}
+                  </article>
+                </li>
+              ))}
+            </ul>
+
+            <p
+              className="text-[15px] leading-relaxed text-muted"
+              style={{ fontFamily: 'var(--font-ui)' }}
+            >
+              Tarifs virtuels : {site.prices.virtuel}
+            </p>
+          </div>
+
+          {/* B. Réel */}
+          <div className="flex flex-col gap-8 sm:gap-10">
+            <div className="flex flex-col gap-3">
+              <span
+                className="text-[11px] tracking-[0.5em] uppercase text-accent font-normal"
+                style={{ fontFamily: 'var(--font-ui)' }}
+              >
+                B — Réel
+              </span>
+              <h3
+                className="text-[clamp(1.8rem,6vw,2.6rem)] leading-[1.12] text-fg font-normal"
+                style={{ fontFamily: 'var(--font-display)' }}
+              >
+                {site.city}. <em className="italic font-normal text-accent">Paris.</em>
+              </h3>
+              <p
+                className="max-w-xl text-[16px] leading-[1.75] text-muted"
+                style={{ fontFamily: 'var(--font-ui)' }}
+              >
+                Quatre formats. Pas plus. {site.dominationOptions}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+              {REAL_SESSIONS.map((service, index) => (
+                <ServiceCard
+                  key={service.title}
+                  service={service}
+                  index={index}
+                  isInView={isInView}
+                />
+              ))}
+            </div>
+          </div>
         </div>
 
-        {/* Cadre des séances */}
+        {/* Cadre des cashmeets */}
         <motion.div
           {...fadeUp(0.3)}
           className="mt-16 lg:mt-20 border border-accent/20 bg-surface/60 shadow-glow p-8 lg:p-12 grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] lg:items-center"
@@ -338,10 +427,10 @@ export default function ServicesSection() {
               marginBottom: '1.5rem',
             }}
           >
-            Tu veux une séance réelle ?
+            Tu veux un cashmeet ?
           </p>
           <a
-            href={site.links.telegram}
+            href={primaryContact().href}
             target="_blank"
             rel="noopener noreferrer"
             className="glow-box inline-block transition-[background,filter] duration-300 hover:brightness-110"
@@ -357,7 +446,7 @@ export default function ServicesSection() {
               textDecoration: 'none',
             }}
           >
-            Écrire sur Telegram
+            {primaryContact().label}
           </a>
           <p
             style={{
@@ -369,7 +458,7 @@ export default function ServicesSection() {
               color: 'var(--muted)',
             }}
           >
-            30 min · 1 h · {site.city} · {site.travelCities.join(' · ')} · Toute la France
+            {site.city} · {site.travelCities.join(' · ')} · Virtuel
           </p>
         </motion.div>
 

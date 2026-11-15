@@ -7,7 +7,7 @@ import { site } from '@/config/site'
 
 const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number]
 
-const ABOUT_BADGES = ['Findom', 'Domination', 'Tribute'] as const
+const ABOUT_BADGES = ['Findom', 'Pieds', 'Latex', 'Contrats'] as const
 
 function Badges({ className = '' }: { className?: string }) {
   return (
@@ -40,13 +40,13 @@ function InfoCard({ className = '' }: { className?: string }) {
         className="text-[11px] tracking-[0.22em] uppercase text-accent font-normal"
         style={{ fontFamily: 'var(--font-ui)' }}
       >
-        Findom · Domination
+        Findom · Pieds
       </span>
       <span
         className="text-[11px] tracking-[0.28em] uppercase text-muted font-normal"
         style={{ fontFamily: 'var(--font-ui)' }}
       >
-        {site.city} / {site.travelCities.join(' / ')} / France
+        {site.city} / {site.travelCities.join(' / ')} / {site.region}
       </span>
     </div>
   )
@@ -145,29 +145,47 @@ export default function AboutSection() {
                 className="text-[2.6rem] xl:text-[3.2rem] leading-[1.08] tracking-tight text-fg font-normal"
                 style={{ fontFamily: 'var(--font-display)' }}
               >
-                Jeune. Cash.{' '}
-                <em style={{ color: 'var(--accent)' }}>Exigeante.</em>
+                Reine.{' '}
+                <em style={{ color: 'var(--accent)' }}>Prédatrice.</em>
               </motion.h2>
 
               {/* Corps */}
-              <motion.div {...fadeUp(0.2)} className="flex flex-col gap-5">
+              <motion.div {...fadeUp(0.2)} className="flex flex-col gap-6">
                 <p
                   className="text-[16px] leading-[1.95] text-muted font-normal"
                   style={{ fontFamily: 'var(--font-ui)' }}
                 >
-                  Jeune, cash, sans détour.
+                  {site.origin} 🇲🇦. Basée à {site.city}, {site.region}.
                   <br />
-                  Connue pour ce que j&apos;exige.
+                  Je me déplace à Paris. Hommes de tous horizons.
+                </p>
+                <p
+                  className="text-[16px] leading-[1.95] text-muted font-normal"
+                  style={{ fontFamily: 'var(--font-ui)' }}
+                >
+                  Élégante, jusqu’au moment où tu oublies qui décide.
                   <br />
-                  Moqueuse en séance : tu ris jaune.
+                  Latex. Pieds. Ongles longs.
+                  <br />
+                  Le silence suffit à te remettre en place.
+                </p>
+                <p
+                  className="text-[16px] leading-[1.95] text-muted font-normal"
+                  style={{ fontFamily: 'var(--font-ui)' }}
+                >
+                  Une séance ne me suffit pas.
+                  <br />
+                  Je peux tenir ta journée. Tes règles. Ton argent. Ton emploi du temps.
+                  <br />
+                  Tu signes. Ensuite tu vis dedans.
                 </p>
                 <p
                   className="text-[16px] leading-[1.95] text-muted font-normal italic"
                   style={{ fontFamily: 'var(--font-ui)' }}
                 >
-                  Mon temps a un prix.
+                  Mon plaisir d&apos;abord.
                   <br />
-                  Ton obéissance aussi.
+                  Ton offrande ensuite.
                 </p>
               </motion.div>
 
@@ -180,7 +198,7 @@ export default function AboutSection() {
                 <p
                   className="text-[16px] italic leading-relaxed text-muted"
                 >
-                  « Tu paies. Je décide. »
+                  « {site.signature} »
                 </p>
               </motion.blockquote>
 
@@ -209,7 +227,7 @@ export default function AboutSection() {
       <div className="lg:hidden">
 
         {/* Image mobile — hauteur fixe explicite */}
-        <div className="relative w-full h-[460px] overflow-hidden rounded-b-[2rem]">
+        <div className="relative w-full h-[320px] sm:h-[380px] overflow-hidden rounded-b-[2rem]">
           <WatermarkedImage
             src={ABOUT_IMAGE_SRC}
             alt={site.name}
@@ -234,7 +252,7 @@ export default function AboutSection() {
         </div>
 
         {/* Texte mobile */}
-        <div className="px-6 pb-20 pt-10 flex flex-col gap-6">
+        <div className="px-5 sm:px-6 pb-24 pt-12 flex flex-col gap-8">
 
           <motion.div {...fadeUp(0)} className="flex items-center gap-3 flex-wrap">
             <div className="w-7 h-px bg-accent flex-shrink-0" />
@@ -254,31 +272,49 @@ export default function AboutSection() {
 
           <motion.h2
             {...fadeUp(0.08)}
-            className="text-[clamp(1.9rem,8vw,2.4rem)] leading-[1.1] tracking-tight text-fg font-normal"
+            className="text-[clamp(2.1rem,9vw,2.6rem)] leading-[1.12] tracking-tight text-fg font-normal"
             style={{ fontFamily: 'var(--font-display)' }}
           >
-            Jeune. Cash.{' '}
-            <em style={{ color: 'var(--accent)' }}>Exigeante.</em>
+            Reine.{' '}
+            <em style={{ color: 'var(--accent)' }}>Prédatrice.</em>
           </motion.h2>
 
-          <motion.div {...fadeUp(0.16)} className="flex flex-col gap-4">
+          <motion.div {...fadeUp(0.16)} className="flex flex-col gap-6">
             <p
-              className="text-[15px] leading-[1.9] text-muted font-normal"
+              className="text-[16px] leading-[1.8] text-muted font-normal"
               style={{ fontFamily: 'var(--font-ui)' }}
             >
-              Jeune, cash, sans détour.
+              {site.origin} 🇲🇦. Basée à {site.city}, {site.region}.
               <br />
-              Connue pour ce que j&apos;exige.
-              <br />
-              Moqueuse en séance : tu ris jaune.
+              Je me déplace à Paris. Hommes de tous horizons.
             </p>
             <p
-              className="text-[15px] leading-[1.9] text-muted font-normal italic"
+              className="text-[16px] leading-[1.8] text-muted font-normal"
               style={{ fontFamily: 'var(--font-ui)' }}
             >
-              Mon temps a un prix.
+              Élégante, jusqu’au moment où tu oublies qui décide.
               <br />
-              Ton obéissance aussi.
+              Latex. Pieds. Ongles longs.
+              <br />
+              Le silence suffit à te remettre en place.
+            </p>
+            <p
+              className="text-[16px] leading-[1.8] text-muted font-normal"
+              style={{ fontFamily: 'var(--font-ui)' }}
+            >
+              Une séance ne me suffit pas.
+              <br />
+              Je peux tenir ta journée. Tes règles. Ton argent. Ton emploi du temps.
+              <br />
+              Tu signes. Ensuite tu vis dedans.
+            </p>
+            <p
+              className="text-[16px] leading-[1.8] text-muted font-normal italic"
+              style={{ fontFamily: 'var(--font-ui)' }}
+            >
+              Mon plaisir d&apos;abord.
+              <br />
+              Ton offrande ensuite.
             </p>
           </motion.div>
 
@@ -290,7 +326,7 @@ export default function AboutSection() {
             <p
               className="text-[15px] italic leading-relaxed text-muted"
             >
-              « Tu paies. Je décide. »
+              « {site.signature} »
             </p>
           </motion.blockquote>
 

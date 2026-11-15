@@ -1,15 +1,15 @@
 import Link from 'next/link'
 import { MessageSquare } from 'lucide-react'
 import type { Metadata } from 'next'
-import { site } from '@/config/site'
+import { site, primaryContact } from '@/config/site'
 
 export const metadata: Metadata = {
   title: `Protocole de contact — ${site.name}`,
-  description: 'Comment m\'approcher : premier message, tribute, validation, séance et safeword.',
+  description: 'Comment m’approcher : premier message sur X, offrande, validation, cashmeet et safeword.',
   robots: { index: false, follow: false },
 }
 
-const CONTACT_URL = site.links.telegram
+const contact = primaryContact()
 
 interface Etape {
   numero: string
@@ -21,34 +21,34 @@ interface Etape {
 const ETAPES: Etape[] = [
   {
     numero: '01',
-    titre:  'Lis d\'abord',
+    titre:  'Lis d’abord',
     texte:  'Lis la page Pratiques & Limites en entier. Une question dont la réponse est déjà écrite sera ignorée.',
   },
   {
     numero: '02',
-    titre:  'Écris sur Telegram',
-    texte:  'Contact uniquement sur Telegram. Pas de message vague, pas de simple « salut ».',
+    titre:  'Écris sur X',
+    texte:  'Contact uniquement sur X. Pas de message vague, pas de simple « salut ».',
   },
   {
     numero: '03',
     titre:  'Le premier message',
-    texte:  'Présente-toi en quelques lignes : qui tu es, ce que tu cherches, la durée (30 min ou 1 h) et la formule choisie. Confirme que tu es majeur.',
-    note:   'Les vrais savent déjà comment s\'adresser à moi. Les autres apprennent.',
+    texte:  'Présente-toi en quelques lignes : qui tu es, ce que tu cherches, la durée (30 min ou 1 h) et la formule. Confirme que tu es majeur.',
+    note:   'Les vrais savent déjà comment s’adresser à moi. Les autres apprennent.',
   },
   {
     numero: '04',
     titre:  'Patience',
-    texte:  'Je réponds quand je le décide. Relancer avant d\'avoir une réponse, c\'est un blocage. Je peux refuser sans me justifier : un refus n\'est pas une invitation à insister.',
+    texte:  'Je réponds quand je le décide. Relancer avant d’avoir une réponse, c’est un blocage. Je peux refuser sans me justifier : un refus n’est pas une invitation à insister.',
   },
   {
     numero: '05',
-    titre:  'Tribute et validation',
-    texte:  'Je valide ou je refuse. Si c\'est oui, le tribute se règle avant la séance, selon les modalités données en privé. Pas de tribute, pas de séance.',
+    titre:  'Offrande et validation',
+    texte:  'Je valide ou je refuse. Si c’est oui, l’offrande se règle avant le cashmeet, selon les modalités données en privé. Pas d’offrande, pas de rencontre.',
   },
   {
     numero: '06',
-    titre:  'Séance et safeword',
-    texte:  'Les règles et les limites sont rappelées au début. Le safeword est obligatoire : un mot, et tout s\'arrête, immédiatement, sans discussion.',
+    titre:  'Cashmeet et safeword',
+    texte:  'Les règles et les limites sont rappelées au début. Le safeword est obligatoire : un mot, et tout s’arrête, immédiatement, sans discussion.',
     note:   'Tout est un jeu de rôle consenti et encadré.',
   },
 ]
@@ -57,7 +57,7 @@ const ERREURS: string[] = [
   'Envoyer un premier message sexuellement explicite',
   'Demander de la nudité ou un acte sexuel',
   'Ignorer les limites de la page Pratiques',
-  'Négocier ou contester le tribute',
+  'Négocier ou contester l’offrande',
   'Demander des photos ou des enregistrements sans mon accord',
   'Tenter de passer outre le safeword ou une limite',
   'Relancer après un silence ou un refus',
@@ -110,7 +110,7 @@ export default function ProtocolePage() {
             style={{ fontFamily: 'var(--font-ui)' }}
           >
             Écris-moi seulement si tu acceptes le cadre : jeu de rôle consenti,
-            règles claires, safeword obligatoire et respect strict des limites posées.
+            offrande d’abord, règles claires, safeword obligatoire.
           </p>
         </div>
 
@@ -209,7 +209,7 @@ export default function ProtocolePage() {
           </p>
 
           <a
-            href={CONTACT_URL}
+            href={contact.href}
             target="_blank"
             rel="noopener noreferrer"
             className="
@@ -228,7 +228,7 @@ export default function ProtocolePage() {
               className="relative z-10 text-[11px] tracking-[0.38em] uppercase font-normal text-fg"
               style={{ fontFamily: 'var(--font-ui)' }}
             >
-              Écrire sur Telegram
+              {contact.label}
             </span>
           </a>
 

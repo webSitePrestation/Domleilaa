@@ -1,25 +1,26 @@
 @import "tailwindcss";
 
 /* ─────────────────────────────────────────────────────────────────
-   VARIABLES — thème gameuse brune, luxe, néon rose
+   VARIABLES — noir profond, bordeaux, reflet latex
    Source unique des couleurs : ne jamais coder une couleur en dur ailleurs.
+   --accent est éclairci juste assez pour rester lisible sur le fond noir.
 ───────────────────────────────────────────────────────────────── */
 :root {
   /* Palette */
-  --bg:        #0B0710; /* fond */
-  --surface:   #1A0F1C; /* surfaces */
-  --accent:    #FF2E93; /* accent rose néon (le seul dominant) */
-  --accent-2:  #C2185B; /* secondaire */
-  --cold:      #8B5CF6; /* froid, usage très limité */
-  --fg:        #F5E9F0; /* texte */
-  --muted:     #B79AAE; /* texte atténué */
-  --brown:     #3A2220; /* marron chaud */
+  --bg:        #050405; /* fond, noir profond */
+  --surface:   #141012; /* surfaces */
+  --accent:    #D64556; /* bordeaux lisible, le seul accent */
+  --accent-2:  #6B1524; /* bordeaux profond */
+  --cold:      #9A918C; /* anthracite clair, usage très limité */
+  --fg:        #F6F1EE; /* texte */
+  --muted:     #BBA9A6; /* texte atténué */
+  --brown:     #2C2628; /* anthracite, filets */
 
   /* Dérivés (toujours calculés depuis la palette) */
   --accent-border: color-mix(in srgb, var(--accent) 32%, transparent);
   --accent-edge:   color-mix(in srgb, var(--accent) 55%, transparent);
-  --glow-soft:     color-mix(in srgb, var(--accent) 28%, transparent);
-  --glow-strong:   color-mix(in srgb, var(--accent) 55%, transparent);
+  --glow-soft:     color-mix(in srgb, var(--accent) 42%, transparent);
+  --glow-strong:   color-mix(in srgb, var(--accent) 70%, transparent);
 
   /* Typographie (polices chargées par next/font dans layout.tsx) */
   --font-display: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
@@ -40,9 +41,9 @@
   --font-serif: var(--font-display);
   --font-sans:  var(--font-ui);
 
-  /* Ombres : glow rose subtil + profondeur */
-  --shadow-glow:        0 0 14px -2px var(--glow-soft);
-  --shadow-glow-strong: 0 0 28px -2px var(--glow-strong);
+  /* Ombres : reflet latex, bord net, peu de flou rose */
+  --shadow-glow:        0 0 18px -2px var(--glow-soft);
+  --shadow-glow-strong: 0 0 32px -1px var(--glow-strong);
   --shadow-deep:        0 40px 120px color-mix(in srgb, var(--bg) 70%, transparent);
 }
 
@@ -64,14 +65,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Halo d'ambiance discret : beaucoup d'espace vide, un seul rose dominant */
+/* Halo : beaucoup d'espace vide, un bordeaux, un reflet clair type latex */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(60rem 40rem at 85% -10%, color-mix(in srgb, var(--accent) 7%, transparent), transparent 70%),
-    radial-gradient(50rem 36rem at -10% 110%, color-mix(in srgb, var(--cold) 6%, transparent), transparent 70%);
+    radial-gradient(52rem 36rem at 88% -12%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 68%),
+    radial-gradient(36rem 28rem at -8% 108%, color-mix(in srgb, var(--fg) 5%, transparent), transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
@@ -96,7 +97,7 @@ em.signature {
   font-style: italic;
 }
 
-/* Mots en italique : accent rose + glow subtil, accentué au survol */
+/* Mots en italique : bordeaux + reflet, accentué au survol */
 em {
   font-family: var(--font-display);
   font-style: italic;
@@ -168,6 +169,14 @@ h3:hover em {
       animation-timeline: view();
       animation-range: entry 0% entry 40%;
     }
+  }
+}
+
+/* Mobile : texte un peu plus grand, lignes plus aérées */
+@media (max-width: 767px) {
+  body {
+    font-size: 16px;
+    line-height: 1.65;
   }
 }
 

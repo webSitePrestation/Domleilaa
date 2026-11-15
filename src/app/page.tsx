@@ -18,7 +18,7 @@ import AboutSection    from '@/components/AboutSection'
 import ServicesSection from '@/components/ServicesSection'
 const TeasingSection = dynamic(() => import('@/components/TeasingSection'))
 const Footer = dynamic(() => import('@/components/Footer'))
-import { site } from '@/config/site'
+import { site, primaryContact } from '@/config/site'
 
 interface NavLink { label: string; href: string; external?: boolean }
 
@@ -27,9 +27,8 @@ const NAV_LINKS: NavLink[] = [
   { label: 'La Déesse',  href: '#about'    },
   { label: 'Culte',      href: '#services' },
   { label: 'Galerie',    href: '#gallery'  },
-  { label: 'Tournage',   href: '#tournage' },
-  { label: 'Tribute',    href: '#contact'  },
-  { label: 'Telegram', href: site.links.telegram, external: true },
+  { label: 'Contrat',    href: '#contrat'  },
+  { label: 'Offrande',   href: '#contact'  },
 ]
 
 function NavbarLogo({ className = '' }: { className?: string }) {
@@ -81,6 +80,7 @@ const menuLinkVariants: Variants = {
    COMPOSANT
 ───────────────────────────────────────────────────────────────── */
 export default function HomePage() {
+  const contact = primaryContact()
   const [menuOpen, setMenuOpen] = useState<boolean>(false)
   const mounted = true
   const [showStickyNav, setShowStickyNav] = useState<boolean>(false)
@@ -182,7 +182,7 @@ export default function HomePage() {
               href={href}
               {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
               className={`text-[11px] uppercase tracking-[0.18em] xl:tracking-[0.34em] text-muted hover:text-accent transition-colors duration-300 whitespace-nowrap ${
-                external ? 'hidden xl:inline' : '' /* doublon du bouton « Écrire sur Telegram » */
+                external ? 'hidden xl:inline' : ''
               }`}
               style={{ fontFamily: 'var(--font-ui)' }}
             >
@@ -192,7 +192,7 @@ export default function HomePage() {
         </div>
 
         <a
-          href={site.links.telegram}
+          href={contact.href}
           target="_blank"
           rel="noopener noreferrer"
           className="glow-box hidden lg:block shrink-0 px-4 py-2 text-[11px] uppercase tracking-[0.28em] text-fg/85 transition-colors duration-300 hover:text-accent border"
@@ -201,7 +201,7 @@ export default function HomePage() {
             borderColor: 'var(--accent)',
           }}
         >
-          Écrire sur Telegram
+          {contact.label}
         </a>
 
         <div className="relative group shrink-0">
@@ -343,7 +343,7 @@ export default function HomePage() {
               ))}
 
               <motion.a
-                href={site.links.telegram}
+                href={contact.href}
                 target="_blank"
                 rel="noopener noreferrer"
                 custom={NAV_LINKS.length}
@@ -358,7 +358,7 @@ export default function HomePage() {
                   borderColor: 'var(--accent)',
                 }}
               >
-                Écrire sur Telegram
+                {contact.label}
               </motion.a>
 
               <motion.div
@@ -447,29 +447,28 @@ export default function HomePage() {
 
             <motion.p
               variants={fadeUp}
-              className="glow-text mt-3 text-[clamp(1.15rem,4.8vw,2rem)] leading-snug text-accent italic font-normal text-center mb-5 max-w-[min(100%,34rem)] text-balance"
+              className="glow-text mt-4 text-[clamp(1.3rem,5.2vw,2rem)] leading-snug text-accent italic font-normal text-center mb-5 max-w-[min(100%,34rem)] text-balance"
               style={{ fontFamily: 'var(--font-display)' }}
             >
-              <span className="whitespace-nowrap">Findom · Domination ·</span>{' '}
-              <span className="whitespace-nowrap">Lille / Paris / toute la France</span>
+              {site.tagline}
             </motion.p>
 
             <motion.p
               variants={fadeUp}
-              className="text-[14px] md:text-[17px] tracking-[0.08em] font-normal text-fg/85 text-center max-w-md px-4 mb-10"
+              className="text-[16px] md:text-[17px] leading-relaxed tracking-[0.04em] md:tracking-[0.08em] font-normal text-fg/85 text-center max-w-md px-2 mb-8"
               style={{ fontFamily: 'var(--font-ui)' }}
             >
-              Tu es là pour payer. Pas pour discuter.
+              {site.signature}
             </motion.p>
           </motion.div>
         )}
 
         {/* CTA zone pouce */}
-        <div className="relative z-10 pb-28 md:pb-12 px-8 flex flex-col items-center gap-3">
+        <div className="relative z-10 pb-32 md:pb-12 px-5 sm:px-8 flex flex-col items-center gap-5">
           {mounted && (
             <>
               <motion.a
-                href={site.links.telegram}
+                href={contact.href}
                 target="_blank"
                 rel="noopener noreferrer"
                 initial={{ opacity: 0, y: 28 }}
@@ -477,17 +476,17 @@ export default function HomePage() {
                 transition={{ delay: 1.55, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
                 whileHover={{ scale: 1.015 }}
                 whileTap={{ scale: 0.97 }}
-                className="glow-box group relative w-full max-w-[280px] py-[18px] px-6 text-center border border-accent/40 hover:border-accent/80 transition-colors duration-500 overflow-hidden focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/60"
+                className="glow-box group relative flex min-h-14 w-full max-w-sm items-center justify-center py-4 px-6 text-center border border-accent/40 hover:border-accent/80 transition-colors duration-500 overflow-hidden focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/60"
                 style={{ animation: 'luxePulse 3.8s ease-in-out 2.8s infinite' }}
-                aria-label="Écrire sur Telegram"
+                aria-label={contact.label}
               >
                 <span aria-hidden="true" className="absolute inset-0 bg-accent/0 group-hover:bg-accent/8 transition-colors duration-500" />
                 <span aria-hidden="true" className="absolute top-0 -left-full h-full w-1/2 bg-gradient-to-r from-transparent via-accent/22 to-transparent group-hover:left-[160%] transition-[left] duration-700 ease-out" />
                 <span
-                  className="relative z-10 text-[11px] tracking-[0.35em] uppercase font-normal text-fg"
+                  className="relative z-10 text-[12px] tracking-[0.22em] sm:tracking-[0.35em] uppercase font-normal text-fg"
                   style={{ fontFamily: 'var(--font-ui)' }}
                 >
-                  Écrire sur Telegram
+                  {contact.label}
                 </span>
               </motion.a>
 
@@ -510,7 +509,7 @@ export default function HomePage() {
                   className="text-[11px] tracking-[0.22em] uppercase text-muted text-center"
                   style={{ fontFamily: 'var(--font-ui)' }}
                 >
-                  Tribute obligatoire · Aucune exception
+                  Offrande obligatoire · Aucune exception
                 </span>
                 <div className="w-px h-2 bg-brown" aria-hidden="true" />
               </motion.div>

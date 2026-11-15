@@ -13,28 +13,28 @@ interface FaqItem {
 
 const FAQ: FaqItem[] = [
   {
-    question: 'Comment se passe le paiement ?',
+    question: 'Comment se passe l’offrande ?',
     answer:
-      "Le tribute se règle avant la séance.\nLes moyens de paiement te sont donnés en privé sur Telegram, après ma validation.\nRien n'est demandé avant mon accord.",
+      "L'offrande se règle avant le cashmeet.\nLes moyens te sont donnés en privé, après ma validation : Unlockt, Revolut, PayPal, Throne.\nRien n'est demandé avant mon accord.",
   },
   {
     question: 'Et si je dois annuler ?',
     answer:
-      "Préviens-moi le plus tôt possible sur Telegram.\nLes conditions d'annulation te sont précisées à la validation.\nUn rendez-vous ignoré, c'est une porte fermée.",
+      "Préviens-moi le plus tôt possible sur X.\nLes conditions d'annulation te sont précisées à la validation.\nUn rendez-vous ignoré, c'est une porte fermée.",
   },
   {
-    question: 'Où ont lieu les séances ?',
-    answer: `Partout en France, en Airbnb.\nJe suis basée à ${site.city} et souvent à ${site.travelCities.join(', ')}.\nSeule la ville est annoncée. Le lieu exact n'est donné qu'après validation.`,
+    question: 'Où ont lieu les cashmeets ?',
+    answer: `À ${site.city} et à ${site.travelCities.join(', ')}. Grand Est pour le reste.\nSeule la ville est annoncée. Le lieu exact n'est donné qu'après validation.`,
   },
   {
     question: 'Quels sont les tarifs ?',
     answer:
-      "Deux formats : 30 min ou 1 h, selon la formule choisie.\nLes montants te sont donnés sur Telegram.\nJe ne négocie pas.",
+      `Cashmeet : à partir de ${site.prices.cashmeetFrom}.\nUro, en plus de la domination : ${site.prices.uroSupplement}.\nPieds : ${site.prices.pieds}. Domination : ${site.prices.domination}. Déchéance : ${site.prices.decheance}. Virtuel : ${site.prices.virtuel}.\nJe ne négocie pas.`,
   },
   {
     question: "Qu'est-ce qui est refusé ?",
     answer:
-      "Les mineurs, toujours.\nTout ce qui est sexuel ou nu.\nToute pratique sans accord préalable.\nLes photos et enregistrements sans mon accord.\nLes insultes visant l'origine ou la couleur de peau.\nLes messages vagues ou insistants.",
+      "Les mineurs, toujours.\nToute pratique sans accord, ni safeword.\nLe vrai chantage, hors jeu de rôle.\nLes photos et enregistrements sans mon accord.\nLes insultes visant l'origine ou la couleur de peau.\nLes messages vagues ou insistants.",
   },
   {
     question: 'Et le consentement ?',
@@ -50,7 +50,7 @@ export default function Faq() {
     <section
       id="faq"
       aria-label="Questions fréquentes"
-      className="relative w-full bg-bg overflow-hidden scroll-mt-20 py-24 lg:py-32 px-6 md:px-12 lg:px-20"
+      className="relative w-full bg-bg overflow-hidden scroll-mt-20 py-20 sm:py-24 lg:py-32 px-5 sm:px-8 md:px-12 lg:px-20"
     >
       <div className="relative z-10 max-w-3xl mx-auto">
         <SectionHeader
@@ -76,7 +76,7 @@ export default function Faq() {
                     aria-controls={`faq-a-${i}`}
                     onClick={() => setOpen(isOpen ? null : i)}
                     className="
-                      group flex w-full items-center justify-between gap-6 py-6 text-left
+                      group flex w-full items-center justify-between gap-6 py-7 sm:py-6 text-left
                       focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/60
                     "
                   >

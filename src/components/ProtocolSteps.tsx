@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { site } from '@/config/site'
+import { primaryContact } from '@/config/site'
 import Reveal from '@/components/Reveal'
 import SectionHeader from '@/components/SectionHeader'
 
@@ -10,16 +10,16 @@ interface Step {
 
 const STEPS: Step[] = [
   {
-    title: 'Écris sur Telegram',
-    text:  "Présente-toi en deux phrases.\nDis ce que tu cherches.\nPas de message vague.",
+    title: 'Écris sur X',
+    text:  "Deux phrases. Ce que tu veux.\nPas de message vague.\nPas de simple « salut ».",
   },
   {
-    title: 'Tribute et validation',
-    text:  "Je valide ou je refuse.\nSi c'est oui, le tribute se règle avant.\nPas de tribute, pas de séance.",
+    title: 'Offrande',
+    text:  "Je valide ou je refuse.\nL'offrande se règle avant.\nPas d'offrande, pas de cashmeet.",
   },
   {
-    title: 'Séance',
-    text:  "Les règles sont rappelées au début.\nLe safeword arrête tout, tout de suite.\nSans discussion.",
+    title: 'Cashmeet',
+    text:  "Les règles au début.\nLe safeword arrête tout.\nSans discussion.",
   },
 ]
 
@@ -29,7 +29,7 @@ export default function ProtocolSteps() {
     <section
       id="etapes"
       aria-label="Protocole en 3 étapes"
-      className="relative w-full bg-bg overflow-hidden scroll-mt-20 py-24 lg:py-32 px-6 md:px-12 lg:px-20"
+      className="relative w-full bg-bg overflow-hidden scroll-mt-20 py-20 sm:py-24 lg:py-32 px-5 sm:px-8 md:px-12 lg:px-20"
     >
       <div className="relative z-10 max-w-6xl mx-auto">
         <SectionHeader
@@ -40,10 +40,10 @@ export default function ProtocolSteps() {
               <em className="italic font-normal text-accent">Aucune exception.</em>
             </>
           }
-          aside={'Tu suis le protocole.\nOu tu ne viens pas.'}
+          aside={'Tu suis.\nOu tu restes dehors.'}
         />
 
-        <ol className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-7">
+        <ol className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-5 lg:gap-7">
           {STEPS.map((step, i) => (
             <li key={step.title} className="flex">
               <Reveal delay={0.1 + i * 0.12} className="flex w-full">
@@ -86,7 +86,7 @@ export default function ProtocolSteps() {
 
                   {i === 0 && (
                     <a
-                      href={site.links.telegram}
+                      href={primaryContact().href}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="
@@ -98,7 +98,7 @@ export default function ProtocolSteps() {
                       "
                       style={{ fontFamily: 'var(--font-ui)' }}
                     >
-                      Écrire sur Telegram
+                      {primaryContact().label}
                     </a>
                   )}
 
@@ -107,7 +107,7 @@ export default function ProtocolSteps() {
                       className="mt-auto border-l-2 border-accent pl-4 text-[13px] leading-[1.7] text-fg/85"
                       style={{ fontFamily: 'var(--font-ui)' }}
                     >
-                      Rappel : le safeword est obligatoire. Un mot, et tout s&apos;arrête.
+                      Rappel : le safeword est obligatoire. Un mot, et tout s’arrête.
                     </p>
                   )}
                 </div>

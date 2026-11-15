@@ -4,7 +4,7 @@ import { join } from 'node:path'
 import { site } from '@/config/site'
 
 export const OG_SIZE = { width: 1200, height: 630 } as const
-export const OG_ALT = `${site.name} — Findom · Domination · ${site.city} / Paris`
+export const OG_ALT = `${site.name} — Findom · ${site.city} / Paris`
 
 /**
  * Photos candidates pour l'image de partage (premier fichier trouvé dans /public/media).
@@ -27,28 +27,36 @@ async function loadPhoto(): Promise<string | null> {
 /*
  * Couleurs : un ImageResponse ne peut pas lire les variables CSS.
  * Elles reprennent les tokens de globals.css :
- *   --bg #0B0710 · --surface #1A0F1C · --accent #FF2E93 · --fg #F5E9F0 · --muted #B79AAE
- * (rgba(11,7,16,…) dans les dégradés = --bg avec transparence)
+ *   --bg #050405 · --surface #141012 · --accent #D64556 · --fg #F6F1EE · --muted #BBA9A6
+ * (rgba(5,4,5,…) dans les dégradés = --bg avec transparence)
  */
-const BG = '#0B0710'
-const ACCENT = '#FF2E93'
-const FG = '#F5E9F0'
-const MUTED = '#B79AAE'
+const BG = '#050405'
+const SURFACE = '#141012'
+const ACCENT = '#D64556'
+const FG = '#F6F1EE'
+const MUTED = '#BBA9A6'
 
 function Monogram({ height }: { height: number }) {
   return (
-    <svg width={Math.round(height * 1.28)} height={height} viewBox="4 0 82 64" fill="none">
+    <svg width={height} height={height} viewBox="0 0 64 64" fill="none">
       <path
-        d="M12 10 H24 C41 10 50 20 50 32 C50 44 41 54 24 54 H12 Z"
+        d="M10 16 H18 C28 16 33 22 33 32 C33 42 28 48 18 48 H10 Z"
         stroke={ACCENT}
-        strokeWidth="5"
+        strokeWidth="3.2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
-        d="M62 10 V54 H78"
+        d="M38 48 L46 16 L54 48"
         stroke={ACCENT}
-        strokeWidth="5"
+        strokeWidth="3.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M40.5 36 H51.5"
+        stroke={ACCENT}
+        strokeWidth="3.2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -58,7 +66,7 @@ function Monogram({ height }: { height: number }) {
 
 /**
  * Carte Open Graph / Twitter.
- * L'image (si elle existe) porte le même filigrane « @domleilaa » en bas à droite
+ * L'image (si elle existe) porte le même filigrane que le site, en bas à droite
  * que le composant <WatermarkedImage> du site (un ImageResponse ne peut pas utiliser
  * un composant React client, on reproduit donc le filigrane ici).
  */
@@ -101,8 +109,8 @@ export async function renderOgCard() {
             inset: 0,
             display: 'flex',
             background: photo
-              ? `linear-gradient(to top, ${BG} 8%, rgba(11,7,16,0.55) 55%, rgba(11,7,16,0.25) 100%)`
-              : `linear-gradient(135deg, ${BG} 40%, #1A0F1C 100%)`,
+              ? `linear-gradient(to top, ${BG} 8%, rgba(5,4,5,0.55) 55%, rgba(5,4,5,0.25) 100%)`
+              : `linear-gradient(135deg, ${BG} 40%, ${SURFACE} 100%)`,
           }}
         />
 
@@ -122,7 +130,7 @@ export async function renderOgCard() {
             {site.name}
           </div>
           <div style={{ display: 'flex', fontSize: 36, color: ACCENT, fontStyle: 'italic' }}>
-            Findom · Domination · {site.city} / Paris
+            Findom · {site.city} / Paris
           </div>
         </div>
 

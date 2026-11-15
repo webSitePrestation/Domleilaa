@@ -37,28 +37,39 @@ export function MaybeLink({
   )
 }
 
-/**
- * Liens secondaires sous le CTA Telegram : X, puis WhatsApp (placeholder TODO).
- */
+const CONTACT_LINKS = [
+  { label: 'X', href: site.links.x },
+  { label: 'Linktree', href: site.links.linktree },
+  { label: 'Revolut', href: site.links.revolut },
+  { label: 'PayPal', href: site.links.paypal },
+] as const
+
+/** Liens secondaires sous le CTA : X, Linktree, Revolut, PayPal. */
 export default function ContactLinks({ className = '' }: { className?: string }) {
   return (
     <div
-      className={`flex items-center justify-center gap-3 ${className}`}
+      className={`flex flex-wrap items-center justify-center gap-x-3 gap-y-2 ${className}`}
       style={{ fontFamily: 'var(--font-ui)' }}
     >
-      <a
-        href={site.links.x}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`${LINK_CLASS} text-muted hover:text-accent`}
-      >
-        X
-      </a>
-      <span className="w-px h-2 bg-brown" aria-hidden="true" />
-      {/* TODO : renseigner site.links.whatsapp (https://wa.me/33XXXXXXXXX) */}
-      <MaybeLink href={site.links.whatsapp} className={LINK_CLASS}>
-        WhatsApp · bientôt
-      </MaybeLink>
+      {CONTACT_LINKS.map(({ label, href }, index) => (
+        <span key={label} className="inline-flex items-center gap-3">
+          {index > 0 && <span className="w-px h-2 bg-brown" aria-hidden="true" />}
+          {isPlaceholderLink(href) ? (
+            <MaybeLink href={href} className={LINK_CLASS}>
+              {label} · bientôt
+            </MaybeLink>
+          ) : (
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${LINK_CLASS} text-muted hover:text-accent`}
+            >
+              {label}
+            </a>
+          )}
+        </span>
+      ))}
     </div>
   )
 }

@@ -6,7 +6,7 @@ import rawDates from '@/data/dates.json'
 
 /**
  * Prochaines dates — lues dans src/data/dates.json.
- * Format d'une entrée : { "city": "Lille", "dates": "12-14 mars", "status": "ouvert" }
+ * Format d'une entrée : { "city": "Strasbourg", "dates": "12-14 mars", "status": "ouvert" }
  * Statuts : "ouvert" | "complet" | "a-confirmer" (toute autre valeur = « À confirmer »).
  * Seule la VILLE est affichée : aucun autre champ (adresse…) n'est jamais lu ni montré.
  */
@@ -37,7 +37,7 @@ export default function UpcomingDates() {
     <section
       id="dates"
       aria-label="Prochaines dates"
-      className="relative w-full bg-bg border-y border-accent/20 scroll-mt-20 py-20 lg:py-24 px-6 md:px-12 lg:px-20"
+      className="relative w-full bg-bg border-y border-accent/20 scroll-mt-20 py-16 sm:py-20 lg:py-24 px-5 sm:px-8 md:px-12 lg:px-20"
     >
       <div className="relative z-10 max-w-6xl mx-auto">
         <SectionHeader
@@ -48,7 +48,7 @@ export default function UpcomingDates() {
               <em className="italic font-normal text-accent">dates.</em>
             </>
           }
-          aside={`Basée à ${site.city}.\nJe me déplace partout en France.`}
+          aside={`Basée à ${site.city}.\nCashmeets à ${site.travelCities.join(', ')}.`}
         />
 
         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-7">

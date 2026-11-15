@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import Monogram from '@/components/Monogram'
 import { site } from '@/config/site'
 
-const STORAGE_KEY = 'domleilaa-age-ok'
+const STORAGE_KEY = 'deessealhya-age-ok'
 const EXIT_URL = 'https://www.google.fr'
 /** Id du conteneur du site : rendu inerte (clavier, lecteur d'écran) tant que l'écran est affiché. */
 const ROOT_ID = 'site-root'

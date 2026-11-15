@@ -94,7 +94,7 @@ export default function HeroVideo() {
         }}
       />
 
-      {/* Filigrane : au-dessus des boutons flottants (X / Telegram) */}
+      {/* Filigrane : au-dessus des boutons flottants */}
       {mediaVisible && <Watermark className="bottom-24 right-4 md:bottom-7 md:right-40" />}
     </div>
   )

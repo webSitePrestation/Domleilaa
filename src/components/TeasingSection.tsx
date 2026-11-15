@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useInView } from 'framer-motion'
-import { site } from '@/config/site'
+import { site, primaryContact } from '@/config/site'
 import WatermarkedImage, { type MediaStatus } from '@/components/WatermarkedImage'
 import ReelVideo from '@/components/ReelVideo'
 
@@ -77,7 +77,7 @@ export default function TeasingSection() {
     <section
       id="gallery"
       aria-label={`Galerie — ${site.name}`}
-      className="relative w-full bg-bg overflow-hidden py-28 lg:py-40 px-6 md:px-12 lg:px-20"
+      className="relative w-full bg-bg overflow-hidden py-20 sm:py-28 lg:py-40 px-5 sm:px-8 md:px-12 lg:px-20"
     >
       <span
         aria-hidden="true"
@@ -112,7 +112,7 @@ export default function TeasingSection() {
               className="text-[clamp(2rem,5vw,3.5rem)] leading-[1.06] tracking-tight text-fg font-normal"
               style={{ fontFamily: 'var(--font-display)' }}
             >
-              Un aperçu libre et accessible.
+              Regarde. Le reste se mérite.
             </motion.h2>
 
             <motion.p
@@ -120,7 +120,7 @@ export default function TeasingSection() {
               className="text-[15px] leading-[1.8] text-muted font-normal italic max-w-xs lg:text-right"
               style={{ fontFamily: 'var(--font-display)' }}
             >
-              Parcours les visuels ici — sans barrière.
+              L’aperçu est libre. L’attention, non.
             </motion.p>
           </div>
         </div>
@@ -232,11 +232,11 @@ export default function TeasingSection() {
             className="text-[15px] text-muted font-normal text-center max-w-sm whitespace-pre-line"
             style={{ fontFamily: 'var(--font-ui)' }}
           >
-            {`Pour échanger,\nécris-moi sur Telegram.`}
+            {`L’aperçu s’arrête là.\nL’offrande ouvre la suite.`}
           </p>
 
           <motion.a
-            href={site.links.telegram}
+            href={primaryContact().href}
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.015 }}
@@ -267,7 +267,7 @@ export default function TeasingSection() {
               className="relative z-10 text-[11px] tracking-[0.38em] uppercase font-normal text-fg"
               style={{ fontFamily: 'var(--font-ui)' }}
             >
-              Telegram — {site.name}
+              {primaryContact().label}
             </span>
           </motion.a>
 
@@ -277,7 +277,7 @@ export default function TeasingSection() {
               className="text-[11px] tracking-[0.3em] uppercase text-muted"
               style={{ fontFamily: 'var(--font-ui)' }}
             >
-              Galerie gratuite · Accès direct
+              Aperçu libre · Offrande obligatoire
             </span>
             <div className="w-8 h-px bg-brown" aria-hidden="true" />
           </div>
