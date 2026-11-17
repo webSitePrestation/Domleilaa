@@ -50,14 +50,15 @@ const STYLE: string[] = [
   'Contact sur X. L’offrande se règle avant.',
 ]
 
-/** Tarifs : seuls les montants donnés sont écrits. Le reste est TODO dans site.ts */
+/** Tarifs : source unique, `site.prices` et `site.belonging`. */
 const TARIFS: { label: string; value: string }[] = [
-  { label: 'Fétichisme des pieds', value: site.prices.pieds },
-  { label: 'Domination', value: site.prices.domination },
-  { label: 'Uro, en plus', value: site.prices.uroSupplement },
-  { label: 'BDSM hard — déchéance', value: site.prices.decheance },
-  { label: 'Cashmeet', value: `À partir de ${site.prices.cashmeetFrom}` },
-  { label: 'Virtuel', value: site.prices.virtuel },
+  ...site.prices.virtual.map(({ label, value }) => ({ label, value })),
+  { label: site.belonging.title, value: site.belonging.price },
+  ...site.prices.content.map(({ label, value }) => ({ label, value })),
+  ...site.prices.real.map(({ label, value }) => ({
+    label: `${label} — 30 min, indicatif`,
+    value,
+  })),
 ]
 
 /* ─────────────────────────────────────────────────────────────────
@@ -154,7 +155,7 @@ export default function PratiquesPage() {
             ))}
           </ul>
           <p className="mt-5 text-[15px] leading-relaxed text-muted" style={{ fontFamily: 'var(--font-ui)' }}>
-            {site.dominationOptions}
+            {site.prices.realNote}
           </p>
         </div>
 

@@ -25,29 +25,63 @@ export const site = {
   region: 'Grand Est',
   travelCities: ['Paris'] as const,
   /**
-   * Tarifs. Seuls les montants explicitement donnés sont écrits.
-   * Le reste reste TODO.
+   * Tarifs. Source unique : uniquement les montants donnés.
+   * Le réel est indicatif (30 min) : il varie selon la demande, la durée et l’humeur.
    */
   prices: {
-    /** TODO */
-    pieds: 'TODO',
-    /** TODO */
-    domination: 'TODO',
-    /** Supplément uro, sur une séance de domination. */
-    uroSupplement: '+50 €',
-    /** TODO : séance BDSM hard, déchéance. */
-    decheance: 'TODO',
-    /** Plancher du cashmeet. */
-    cashmeetFrom: '250 €',
-    /** TODO : contenu, snap, cam, contrats, jeux. */
-    virtuel: 'TODO',
+    virtual: [
+      { label: 'Cam 10 min', value: '30 €', note: '' },
+      { label: 'Appel 10 min', value: '30 €', note: '' },
+      {
+        label: 'Blackmail',
+        value: '20 € de participation',
+        note: 'Jeu de rôle consenti. Jamais un vrai chantage.',
+      },
+    ],
+    content: [
+      { label: 'Photo collant / chaussure / talon / bottines / basket', value: '10 €' },
+      { label: 'Photo pieds nus', value: '15 €' },
+      { label: 'Vidéo 1 min', value: '20 €' },
+      { label: 'Vidéo pieds nus 1 min', value: '25 €' },
+      { label: 'Vidéo trampling 1 min', value: '35 €' },
+      { label: 'Vidéo footjob 1 min', value: '35 €' },
+      { label: 'Vidéo foodcrush 1 min', value: '40 €' },
+    ],
+    realNote:
+      'Les tarifs varient selon les pratiques demandées, la durée et mon humeur. Indicatifs pour 30 minutes.',
+    real: [
+      {
+        label: 'Séance simple',
+        value: '80 €',
+        detail: 'Nettoyage de chaussures, léchage de pieds, massage.',
+      },
+      {
+        label: 'Séance plus poussée',
+        value: '100 €',
+        detail: 'Selon les pratiques demandées, la durée et mon humeur.',
+      },
+      {
+        label: 'Séance hard',
+        value: '150 €',
+        detail: 'Facesitting, cuck, uro, douleurs fortes.',
+      },
+    ],
   },
-  /**
-   * Options à l’intérieur d’une séance de domination.
-   * Ce ne sont pas des séances séparées, ni des tarifs séparés.
-   */
-  dominationOptions:
-    'CBT, facesitting, uro, ballbusting, humiliation. Des options. Pas des séances à part.',
+  /** Contrat d’appartenance totale. L’application Obedience en fait partie. */
+  belonging: {
+    title: 'Contrat d’appartenance totale',
+    price: '50 à 100 € / mois',
+    summary: 'Rituels, fidélité, protocole.',
+    priority: 'Priorité sur les disponibilités.',
+    app: 'Obedience',
+    obedience: [
+      'Règles personnalisées, écrites par moi.',
+      'Tâches quotidiennes.',
+      'Un système de points, selon ta régularité.',
+      'Des récompenses si tu es régulier et docile.',
+      'Des punitions que je choisis, si tu ne l’es pas.',
+    ],
+  },
   /** Phrase cadre. Toutes les pratiques, dans le consentement. */
   practicesAll:
     'Toutes les pratiques possibles. Dans le consentement. Avec safeword.',

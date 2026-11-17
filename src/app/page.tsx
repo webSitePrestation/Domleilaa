@@ -265,13 +265,133 @@ export default function HomePage() {
         aria-expanded={menuOpen}
         aria-controls="mobile-menu"
         aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
-        className="fixed top-5 right-5 z-[60] p-2 rounded-sm border border-accent/28 bg-bg/78 backdrop-blur-sm text-fg hover:text-accent transition-colors duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/60 md:hidden"
+        className={`fixed top-5 right-5 p-2 rounded-sm border border-accent/28 bg-bg/78 backdrop-blur-sm text-fg hover:text-accent transition-colors duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/60 md:hidden ${menuOpen ? 'z-[90]' : 'z-[60]'}`}
       >
         {menuOpen
           ? <X size={20} strokeWidth={1} aria-hidden="true" />
           : <Menu size={20} strokeWidth={1} aria-hidden="true" />
         }
       </button>
+
+      {/* Hors du hero (z-10) : sinon les sections suivantes passent au-dessus au scroll. */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            id="mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            variants={menuOverlay}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="fixed inset-0 z-[80] bg-bg flex flex-col items-center justify-start gap-6 overflow-y-auto overscroll-contain px-6 pt-24 pb-28"
+          >
+            <button
+              onClick={() => setMenuOpen(false)}
+              aria-label="Fermer le menu"
+              className="absolute top-6 right-6 p-2 text-muted hover:text-accent transition-colors"
+            >
+              <X size={20} strokeWidth={1} />
+            </button>
+
+            {NAV_LINKS.map(({ label, href, external }, i) => (
+              <motion.a
+                key={label}
+                href={href}
+                {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                custom={i}
+                variants={menuLinkVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                onClick={() => setMenuOpen(false)}
+                className="text-xl tracking-[0.18em] uppercase italic text-fg/75 hover:text-accent transition-colors duration-300"
+                style={{ fontFamily: 'var(--font-display)' }}
+              >
+                {label}
+              </motion.a>
+            ))}
+
+            <motion.a
+              href={contact.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              custom={NAV_LINKS.length}
+              variants={menuLinkVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              onClick={() => setMenuOpen(false)}
+              className="glow-box mt-1 px-5 py-2.5 text-[11px] uppercase tracking-[0.24em] text-fg/90 transition-colors duration-300 hover:text-accent border"
+              style={{
+                fontFamily: 'var(--font-ui)',
+                borderColor: 'var(--accent)',
+              }}
+            >
+              {contact.label}
+            </motion.a>
+
+            <motion.div
+              custom={NAV_LINKS.length + 1}
+              variants={menuLinkVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="mt-2 flex flex-col items-center gap-3"
+            >
+              <span
+                className="text-[11px] tracking-[0.35em] uppercase text-muted"
+                style={{ fontFamily: 'var(--font-ui)' }}
+              >
+                Ressources
+              </span>
+              <div className="flex flex-col items-center gap-2">
+                <Link
+                  href="/pratiques"
+                  onClick={() => setMenuOpen(false)}
+                  className="text-[11px] tracking-[0.22em] uppercase text-muted hover:text-accent transition-colors duration-300"
+                  style={{ fontFamily: 'var(--font-ui)' }}
+                >
+                  Pratiques
+                </Link>
+                <Link
+                  href="/protocole"
+                  onClick={() => setMenuOpen(false)}
+                  className="text-[11px] tracking-[0.22em] uppercase text-muted hover:text-accent transition-colors duration-300"
+                  style={{ fontFamily: 'var(--font-ui)' }}
+                >
+                  Protocole
+                </Link>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.35, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+              className="flex items-center gap-4 mt-1"
+            >
+              <a
+                href={site.links.x}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="X"
+                className="text-muted hover:text-accent transition-colors duration-300"
+              >
+                <X size={14} strokeWidth={1} aria-hidden="true" />
+              </a>
+            </motion.div>
+
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ delay: 0.5, duration: 1 }}
+              className="w-8 h-px bg-accent/50 mt-4"
+              aria-hidden="true"
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ════════════════════════════════════════════════════════
           HERO — plein écran
@@ -302,126 +422,6 @@ export default function HomePage() {
 
           <div aria-hidden="true" className="w-8 md:w-0" />
         </nav>
-
-        {/* Menu overlay */}
-        <AnimatePresence>
-          {menuOpen && (
-            <motion.div
-              id="mobile-menu"
-              role="dialog"
-              aria-modal="true"
-              variants={menuOverlay}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              className="fixed inset-0 z-[55] bg-bg flex flex-col items-center justify-start gap-6 overflow-y-auto px-6 pt-24 pb-10"
-            >
-              <button
-                onClick={() => setMenuOpen(false)}
-                aria-label="Fermer le menu"
-                className="absolute top-6 right-6 p-2 text-muted hover:text-accent transition-colors"
-              >
-                <X size={20} strokeWidth={1} />
-              </button>
-
-              {NAV_LINKS.map(({ label, href, external }, i) => (
-                <motion.a
-                  key={label}
-                  href={href}
-                  {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                  custom={i}
-                  variants={menuLinkVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  onClick={() => setMenuOpen(false)}
-                  className="text-xl tracking-[0.18em] uppercase italic text-fg/75 hover:text-accent transition-colors duration-300"
-                  style={{ fontFamily: 'var(--font-display)' }}
-                >
-                  {label}
-                </motion.a>
-              ))}
-
-              <motion.a
-                href={contact.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                custom={NAV_LINKS.length}
-                variants={menuLinkVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                onClick={() => setMenuOpen(false)}
-                className="glow-box mt-1 px-5 py-2.5 text-[11px] uppercase tracking-[0.24em] text-fg/90 transition-colors duration-300 hover:text-accent border"
-                style={{
-                  fontFamily: 'var(--font-ui)',
-                  borderColor: 'var(--accent)',
-                }}
-              >
-                {contact.label}
-              </motion.a>
-
-              <motion.div
-                custom={NAV_LINKS.length + 1}
-                variants={menuLinkVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                className="mt-2 flex flex-col items-center gap-3"
-              >
-                <span
-                  className="text-[11px] tracking-[0.35em] uppercase text-muted"
-                  style={{ fontFamily: 'var(--font-ui)' }}
-                >
-                  Ressources
-                </span>
-                <div className="flex flex-col items-center gap-2">
-                  <Link
-                    href="/pratiques"
-                    onClick={() => setMenuOpen(false)}
-                    className="text-[11px] tracking-[0.22em] uppercase text-muted hover:text-accent transition-colors duration-300"
-                    style={{ fontFamily: 'var(--font-ui)' }}
-                  >
-                    Pratiques
-                  </Link>
-                  <Link
-                    href="/protocole"
-                    onClick={() => setMenuOpen(false)}
-                    className="text-[11px] tracking-[0.22em] uppercase text-muted hover:text-accent transition-colors duration-300"
-                    style={{ fontFamily: 'var(--font-ui)' }}
-                  >
-                    Protocole
-                  </Link>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.35, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                className="flex items-center gap-4 mt-1"
-              >
-                <a
-                  href={site.links.x}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="X"
-                  className="text-muted hover:text-accent transition-colors duration-300"
-                >
-                  <X size={14} strokeWidth={1} aria-hidden="true" />
-                </a>
-              </motion.div>
-
-              <motion.div
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ delay: 0.5, duration: 1 }}
-                className="w-8 h-px bg-accent/50 mt-4"
-                aria-hidden="true"
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
 
         {/* Contenu hero centré */}
         {mounted && (

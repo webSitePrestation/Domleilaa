@@ -28,8 +28,21 @@ const FAQ: FaqItem[] = [
   },
   {
     question: 'Quels sont les tarifs ?',
-    answer:
-      `Cashmeet : à partir de ${site.prices.cashmeetFrom}.\nUro, en plus de la domination : ${site.prices.uroSupplement}.\nPieds : ${site.prices.pieds}. Domination : ${site.prices.domination}. Déchéance : ${site.prices.decheance}. Virtuel : ${site.prices.virtuel}.\nJe ne négocie pas.`,
+    answer: [
+      'Virtuel.',
+      ...site.prices.virtual.map((item) =>
+        item.note ? `${item.label} : ${item.value}. ${item.note}` : `${item.label} : ${item.value}.`,
+      ),
+      `${site.belonging.title} : ${site.belonging.price}.`,
+      `${site.belonging.summary} ${site.belonging.priority}`,
+      `Application ${site.belonging.app}.`,
+      ...site.belonging.obedience,
+      'Vente de contenu.',
+      ...site.prices.content.map((item) => `${item.label} : ${item.value}.`),
+      site.prices.realNote,
+      ...site.prices.real.map((item) => `${item.label} : ${item.value}. ${item.detail}`),
+      'Je ne négocie pas.',
+    ].join('\n'),
   },
   {
     question: "Qu'est-ce qui est refusé ?",

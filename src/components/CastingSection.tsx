@@ -1,5 +1,5 @@
 import { Check } from 'lucide-react'
-import { primaryContact } from '@/config/site'
+import { site, primaryContact } from '@/config/site'
 import Reveal from '@/components/Reveal'
 import SectionHeader from '@/components/SectionHeader'
 
@@ -20,9 +20,15 @@ const GUARANTEES = [
 ] as const
 
 const LEVELS: { title: string; text: string }[] = [
-  { title: 'Léger', text: 'Règles ponctuelles. Tu obéis quand je t’appelle.' },
-  { title: 'Suivi', text: 'Messages, offrandes, horaires. Je reste dans ta journée.' },
-  { title: 'Total', text: 'Quotidien complet. Règles, argent, emploi du temps. Tu vis dedans.' },
+  {
+    title: 'Appartenance',
+    text: `${site.belonging.summary} ${site.belonging.price}.`,
+  },
+  { title: 'Priorité', text: site.belonging.priority },
+  {
+    title: site.belonging.app,
+    text: 'L’application du contrat. Règles, tâches, points. Je mène.',
+  },
 ]
 
 /** Section « Contrat » : appartenance, latex et cuir, dans un cadre consenti. */
@@ -45,7 +51,7 @@ export default function CastingSection() {
               ?
             </>
           }
-          aside={'Trois niveaux.\nJusqu’à ton quotidien.'}
+          aside={`${site.belonging.price}.\n${site.belonging.app} tient le quotidien.`}
         />
 
         <ol className="mb-8 grid grid-cols-1 gap-4 sm:mb-10 sm:grid-cols-3 sm:gap-5">
@@ -57,7 +63,7 @@ export default function CastingSection() {
                     className="text-[11px] tracking-[0.35em] uppercase text-accent"
                     style={{ fontFamily: 'var(--font-ui)' }}
                   >
-                    Niveau {i + 1}
+                    0{i + 1}
                   </span>
                   <h3
                     className="text-[1.45rem] italic font-normal text-fg"
@@ -76,6 +82,36 @@ export default function CastingSection() {
             </li>
           ))}
         </ol>
+
+        <Reveal className="mb-8 sm:mb-10">
+          <article className="flex flex-col gap-5 border border-accent/40 bg-surface/60 p-6 sm:p-8 shadow-glow">
+            <span
+              className="text-[11px] tracking-[0.35em] uppercase text-accent"
+              style={{ fontFamily: 'var(--font-ui)' }}
+            >
+              {site.belonging.app}
+            </span>
+            <h3
+              className="text-[1.45rem] italic font-normal text-fg"
+              style={{ fontFamily: 'var(--font-display)' }}
+            >
+              Comment je te tiens.
+            </h3>
+            <ul className="flex flex-col gap-3">
+              {site.belonging.obedience.map((line) => (
+                <li key={line} className="flex items-start gap-3">
+                  <span className="text-accent flex-shrink-0 text-[11px] mt-[5px]">—</span>
+                  <span
+                    className="text-[16px] leading-[1.7] text-muted font-normal"
+                    style={{ fontFamily: 'var(--font-ui)' }}
+                  >
+                    {line}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        </Reveal>
 
         <div className="grid gap-5 sm:gap-6 lg:grid-cols-2 lg:gap-7">
           <Reveal className="flex">
@@ -125,7 +161,10 @@ export default function CastingSection() {
                 {[
                   { title: 'Majeur(e)', text: 'Obligatoire. Aucune exception.' },
                   { title: 'Offrande', text: 'Tu la poses avant. Elle ne se négocie pas.' },
-                  { title: 'Niveau', text: 'Tu dis jusqu’où tu veux que je tienne ta vie.' },
+                  {
+                    title: 'Contrat',
+                    text: `${site.belonging.price}. Appartenance totale. ${site.belonging.app} inclus.`,
+                  },
                   { title: 'Ville', text: 'Strasbourg, Paris, ou à distance.' },
                 ].map((c) => (
                   <li key={c.title} className="flex items-start gap-3">

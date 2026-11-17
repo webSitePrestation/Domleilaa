@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { Video, Camera, ScrollText, Flame } from 'lucide-react'
+import { ScrollText } from 'lucide-react'
 import { site, primaryContact } from '@/config/site'
 
 const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number]
@@ -15,81 +15,58 @@ interface Service {
   details:     string[]
 }
 
-/** Quatre séances réelles. Les pratiques sont des options, pas des cartes. */
-const REAL_SESSIONS: Service[] = [
-  {
-    icon:      <span className="text-[11px] tracking-[0.2em]">01</span>,
-    label:     'Au sol',
-    title:     'Fétichisme des pieds',
-    description:
-      "Tu es en bas.\nMes pieds ont ton attention.\nService. Adoration. Silence.",
-    details: [
-      `Tarif : ${site.prices.pieds}`,
-      'Règles et safeword avant',
-    ],
-  },
-  {
-    icon:      <span className="text-[11px] tracking-[0.2em]">02</span>,
-    label:     'Tout le registre',
-    title:     'Domination',
-    description:
-      "Toutes les pratiques de domination.\nJe choisis le thème. Tu suis.\nRien sans accord.",
-    details: [
-      `Tarif : ${site.prices.domination}`,
-      `Uro : ${site.prices.uroSupplement}`,
-      site.dominationOptions,
-    ],
-  },
-  {
-    icon:      <Flame size={18} strokeWidth={1} />,
-    label:     'Hard',
-    title:     'Déchéance totale',
-    description:
-      "BDSM hard.\nTu ne négocies plus rien.\nLe safeword reste la seule sortie.",
-    details: [
-      `Tarif : ${site.prices.decheance}`,
-      'Latex. Cadre strict. Safeword.',
-    ],
-  },
-  {
-    icon:      <span className="text-[11px] tracking-[0.2em]">04</span>,
-    label:     `${site.city} / Paris`,
-    title:     'Cashmeet',
-    description:
-      "Tu te déplaces. Tu paies. Tu obéis.\nLa ville seulement.\nLe lieu, après validation.",
-    details: [
-      `À partir de ${site.prices.cashmeetFrom}`,
-      'Offrande avant. Aucune exception.',
-    ],
-  },
-]
+/** Trois formats réels. Tarifs indicatifs, 30 minutes. */
+const REAL_SESSIONS: Service[] = site.prices.real.map((item, index) => ({
+  icon: <span className="text-[11px] tracking-[0.2em]">0{index + 1}</span>,
+  label: '30 min · indicatif',
+  title: item.label,
+  description: item.detail,
+  details: [
+    item.value,
+    'Règles et safeword avant',
+    `${site.city} et ${site.travelCities.join(', ')}. La ville seulement.`,
+  ],
+}))
 
-const VIRTUAL = [
-  {
-    icon:  <Video size={18} strokeWidth={1} />,
-    title: 'Contenu',
-    text:  'Ce que je décide de montrer. Pas ce que tu réclames.',
-    featured: false,
-  },
-  {
-    icon:  <Camera size={18} strokeWidth={1} />,
-    title: 'Snap / cam',
-    text:  'Séance à distance. Tu es là. Je mène.',
-    featured: false,
-  },
-  {
-    icon:  <ScrollText size={18} strokeWidth={1} />,
-    title: 'Contrats d’appartenance',
-    text:  'Du suivi léger au contrôle du quotidien. Règles, argent, emploi du temps.',
-    featured: true,
-  },
-  {
-    icon:  <Flame size={18} strokeWidth={1} />,
-    title: 'Jeux',
-    text:  'Slowdrain. Blackmail de rôle. Domination 24/7. Jeu consenti. Jamais un vrai chantage.',
-    featured: false,
-  },
-]
+function PriceRows({
+  items,
+}: {
+  items: readonly { readonly label: string; readonly value: string; readonly note?: string }[]
+}) {
+  return (
+    <ul className="flex flex-col border border-accent/20 bg-surface/60 shadow-glow">
+      {items.map((item) => (
+        <li
+          key={item.label}
+          className="flex flex-col gap-1 border-b border-brown px-6 py-4 last:border-b-0 sm:px-7"
+        >
+          <div className="flex items-baseline justify-between gap-4">
+            <span
+              className="text-[15px] leading-snug text-fg font-normal"
+              style={{ fontFamily: 'var(--font-ui)' }}
+            >
+              {item.label}
+            </span>
+            <span
+              className="shrink-0 text-[14px] text-accent font-normal"
+              style={{ fontFamily: 'var(--font-ui)' }}
+            >
+              {item.value}
+            </span>
+          </div>
+          {item.note ? (
+            <span
+              className="text-[13px] leading-relaxed text-muted font-normal"
+              style={{ fontFamily: 'var(--font-ui)' }}
+            >
+              {item.note}
+            </span>
+          ) : null}
+        </li>
+      ))}
+    </ul>
+  )
+}
 
 /** Cadre des cashmeets, affiché sous les cartes. */
 const FRAME_RULES = [
@@ -289,52 +266,75 @@ export default function ServicesSection() {
               </h3>
             </div>
 
-            <ul className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
-              {VIRTUAL.map((item) => (
-                <li
-                  key={item.title}
-                  className={item.featured ? 'md:col-span-2' : undefined}
+            <div className="flex flex-col gap-4">
+              <h4
+                className="text-[11px] tracking-[0.45em] uppercase text-muted font-normal"
+                style={{ fontFamily: 'var(--font-ui)' }}
+              >
+                Séances
+              </h4>
+              <PriceRows items={site.prices.virtual} />
+            </div>
+
+            <div className="flex flex-col gap-4">
+              <h4
+                className="text-[11px] tracking-[0.45em] uppercase text-muted font-normal"
+                style={{ fontFamily: 'var(--font-ui)' }}
+              >
+                Vente de contenu
+              </h4>
+              <PriceRows items={site.prices.content} />
+            </div>
+
+            <article className="flex flex-col gap-5 border border-accent/50 bg-surface/60 p-7 sm:p-8 shadow-glow">
+              <div className="flex items-center gap-3 text-accent">
+                <ScrollText size={18} strokeWidth={1} aria-hidden="true" />
+                <h4
+                  className="text-[1.35rem] italic font-normal text-fg"
+                  style={{ fontFamily: 'var(--font-display)' }}
                 >
-                  <article
-                    className={`flex h-full flex-col gap-4 border bg-surface/60 p-7 sm:p-8 shadow-glow ${
-                      item.featured ? 'border-accent/50' : 'border-accent/20'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3 text-accent">
-                      {item.icon}
-                      <h4
-                        className="text-[1.35rem] italic font-normal text-fg"
-                        style={{ fontFamily: 'var(--font-display)' }}
-                      >
-                        {item.title}
-                      </h4>
-                    </div>
-                    <p
-                      className="text-[16px] leading-[1.75] text-muted font-normal"
+                  {site.belonging.title}
+                </h4>
+              </div>
+              <p
+                className="text-[16px] leading-[1.75] text-accent font-normal"
+                style={{ fontFamily: 'var(--font-ui)' }}
+              >
+                {site.belonging.price}
+              </p>
+              <p
+                className="text-[16px] leading-[1.75] text-muted font-normal"
+                style={{ fontFamily: 'var(--font-ui)' }}
+              >
+                {site.belonging.summary} {site.belonging.priority}
+              </p>
+              <p
+                className="text-[16px] leading-[1.75] text-fg font-normal"
+                style={{ fontFamily: 'var(--font-ui)' }}
+              >
+                Application {site.belonging.app}. C’est moi qui écris les règles.
+              </p>
+              <ul className="flex flex-col gap-3">
+                {site.belonging.obedience.map((line) => (
+                  <li key={line} className="flex items-start gap-3">
+                    <span className="text-accent flex-shrink-0 text-[11px] mt-[5px]">—</span>
+                    <span
+                      className="text-[15px] leading-relaxed text-muted font-normal"
                       style={{ fontFamily: 'var(--font-ui)' }}
                     >
-                      {item.text}
-                    </p>
-                    {item.featured && (
-                      <a
-                        href="#contrat"
-                        className="mt-1 inline-flex min-h-12 items-center text-[11px] uppercase tracking-[0.28em] text-accent"
-                        style={{ fontFamily: 'var(--font-ui)' }}
-                      >
-                        Voir les niveaux du contrat
-                      </a>
-                    )}
-                  </article>
-                </li>
-              ))}
-            </ul>
-
-            <p
-              className="text-[15px] leading-relaxed text-muted"
-              style={{ fontFamily: 'var(--font-ui)' }}
-            >
-              Tarifs virtuels : {site.prices.virtuel}
-            </p>
+                      {line}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <a
+                href="#contrat"
+                className="mt-1 inline-flex min-h-12 items-center text-[11px] uppercase tracking-[0.28em] text-accent"
+                style={{ fontFamily: 'var(--font-ui)' }}
+              >
+                Voir le contrat
+              </a>
+            </article>
           </div>
 
           {/* B. Réel */}
@@ -356,11 +356,11 @@ export default function ServicesSection() {
                 className="max-w-xl text-[16px] leading-[1.75] text-muted"
                 style={{ fontFamily: 'var(--font-ui)' }}
               >
-                Quatre formats. Pas plus. {site.dominationOptions}
+                {site.prices.realNote}
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6">
               {REAL_SESSIONS.map((service, index) => (
                 <ServiceCard
                   key={service.title}

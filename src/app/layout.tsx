@@ -4,6 +4,7 @@ import { site, primaryContact } from '@/config/site'
 import AgeGate from '@/components/AgeGate'
 import MotionProvider from '@/components/MotionProvider'
 import MobileContactBar from '@/components/MobileContactBar'
+import BackToTop from '@/components/BackToTop'
 import './globals.css'
 
 /* ─────────────────────────────────────────────────────────────────
@@ -95,6 +96,7 @@ export default function RootLayout({
             {children}
           </MotionProvider>
           <MobileContactBar />
+          <BackToTop />
           {/* Boutons flottants : desktop uniquement (sur mobile, c'est la barre fixe) */}
           <div className="fixed bottom-5 right-5 z-[95] hidden md:flex items-center gap-3">
             <a
